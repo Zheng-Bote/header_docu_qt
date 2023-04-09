@@ -45,27 +45,23 @@ int main(int argc, char *argv[])
 
     auto result = options.parse(argc, argv);
 
-    if (result.count("help"))
-    {
+    if (result.count("help")) {
         std::cout << options.help() << std::endl;
         exit(0);
     }
-    if (result.count("version"))
-    {
+    if (result.count("version")) {
         std::cout << prog << "-" << VERSION << std::endl;
         exit(0);
     }
 
     // create default Inifile
-    if (result.count("create"))
-    {
+    if (result.count("create")) {
         Inifile.createIni(dir);
         Snippets.checkBool(Inifile.saveIniToFile(dir, defaultInifile));
     }
 
     // load given Inifile
-    if (result.count("ini"))
-    {
+    if (result.count("ini")) {
         std::string dirfile = result["ini"].as<std::string>();
         QString dirFile = dirfile.c_str();
 
@@ -84,8 +80,8 @@ int main(int argc, char *argv[])
     Snippets.checkBool(Inifile.checkIniOutputs());
     Snippets.checkBool(Inifile.checkIniPlugins());
 
-    // Inifile.listIniEntries();
 
+    // the end
     exit(0);
     return a.exec();
 }

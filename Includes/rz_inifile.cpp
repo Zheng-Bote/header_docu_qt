@@ -79,21 +79,16 @@ bool Inifile::loadIni(QString &pathFile)
     bool singleFile = false;
 
     std::string inputDir = myIni["Input"]["Dir"].as<std::string>();
-    std::string outputDir = myIni["Output"]["Dir"].as<std::string>();
-    std::string outPutExtension = myIni["Output"]["Extension"].as<std::string>();
     singleFile = myIni["Output"]["singleFile"].as<bool>();
-    std::string parserDir = myIni["Plugins"]["parserDir"].as<std::string>();
-    std::string writerDir = myIni["Plugins"]["writer"].as<std::string>();
     std::string extensionsStr = myIni["Input"]["Extensions"].as<std::string>();
 
-    std::string attribs = myIni["Meta"]["Attributes"].as<std::string>();
-    qInfo() << "Atributes: " << attribs;
     QString qextensionsStr = extensionsStr.c_str();
     extensions = qextensionsStr.remove(" ").split(",");
     foreach (const QString &str, extensions) {
         qInfo() << "Item: " << str;
     }
-*/
+    */
+
     return true;
 }
 
