@@ -37,6 +37,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="screenshots-and-samples">Screenshots and Samples</a></li>
   </ol>
 </details>
 
@@ -45,6 +46,8 @@
 ### About the Project 
 
 **Create documentation or SBOM SPDX from file header (e.g. \*.c[pp], \*.h[pp], ...)**
+
+:arrow_right: <mark>:warning: still under construction :warning:</mark> :arrow_left:
 
 *short description:*
 
@@ -116,17 +119,17 @@ see:
 
 **cxxopts**
 
-a lightweight C++ option parser library, supporting the standard GNU style syntax for options. +
+a lightweight C++ option parser library, supporting the standard GNU style syntax for options. 
 https://github.com/jarro2783/cxxopts
 
 **inifile-cpp**
 
-inifile-cpp is a simple and easy to use single header-only ini file en- and decoder for C++.
+inifile-cpp is a simple and easy to use single header-only ini file en- and decoder for C++. 
 https://github.com/Rookfighter/inifile-cpp
 
 **OpenSSL**
 
-OpenSSL - a robust, commercial-grade, full-featured toolkit for general-purpose cryptography and secure communication.
+OpenSSL - a robust, commercial-grade, full-featured toolkit for general-purpose cryptography and secure communication. 
 https://www.openssl.org/
 
 OpenSSL (Library tested: OpenSSL 3.0.2 15 Mar 2022; Linux: openssl-dev) is needed for creating SHA2-256Bit Hashes for strings and files.
@@ -270,6 +273,47 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ZHENG Robert Zhèng Bó Tè 郑 伯特
 
 Project Link: [https://github.com/Zheng-Bote/https://github.com/Zheng-Bote/header_docu_qt/](https://github.com/Zheng-Bote/header_docu_qt/)
+
+
+## Screenshots and Samples
+
+**Default Inifile**
+
+```
+[Input]
+Dir=/Volumes/500GB/Dev/QT/header_docu_qt/Inputs
+Extensions=*.h, *.hpp, *.c, *.cpp
+[Meta]
+Attributes=FILE_PERM, LAST_MODIFIED, FILE_SIZE, FILE_HASH_SHA256
+Metadata=TITLE, BRIEF, DESC, AUTHOR, LICENSE, VERSION, COPYRIGHT, SOURCE, COMMENT, SYNTAX, HISTORY, DEPENDENCIES
+[Output]
+Dir=/Volumes/500GB/Dev/QT/header_docu_qt/Outputs
+Filetype=.json
+singleFile=false
+[Plugins]
+parserDir=/Volumes/500GB/Dev/QT/header_docu_qt/Plugins/parser
+writerDir=/Volumes/500GB/Dev/QT/header_docu_qt/Plugins/writer
+```
+
+**Plugin-Loader**
+
+Plug-In loader-test with errors
+
+```
+Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhtml_plugin.so"
+Loaded:  "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhtml_plugin.so"
+Plugin Constructed
+Could not cast:  "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhtml_plugin.so"
+Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so"
+qt.core.plugin.loader: /home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so: failed to map to memory: Das Argument ist ungültig
+Error:  "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so"  Error:  "The file '/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so' is not a valid Qt plugin."
+Plugins ParserDir has no valid plugins
+program criterias missmatch
+Plugin Deconstructed
+```
+
+
+### the end
 
 :vulcan_salute:
 
