@@ -37,7 +37,7 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="screenshots-and-samples">Screenshots and Samples</a></li>
+    <li><a href="#screenshots-and-samples">Screenshots and Samples</a></li>
   </ol>
 </details>
 
