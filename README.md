@@ -310,6 +310,9 @@ writerDir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Deskt
 **Plugin-Loader**
 
 Plug-In loader-test with errors
+(missmatched identifier within the plug-in)
+
+> Q_DECLARE_INTERFACE(Plugin, "net.hase-zheng.header_docu_plugin");
 
 ```
 Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhtml_plugin.so"
