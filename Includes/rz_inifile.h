@@ -1,5 +1,4 @@
-#ifndef INIFILE_H
-#define INIFILE_H
+#pragma once
 
 #include <QString>
 #include <iostream>
@@ -7,11 +6,9 @@
 #include <QFile>
 #include <QDebug>
 
-/*
- * https://github.com/Rookfighter/inifile-cpp
- * #include "Includes/inicpp.h"
- */
+/* https://github.com/Rookfighter/inifile-cpp */
 #include "inicpp.h"
+
 
 class Inifile
 {
@@ -20,14 +17,21 @@ public:
     Inifile(QString &progname);
     Inifile(QString &path, QString &file);
     ~Inifile();
+
     void Test();
     void createIni(QString &path);
     bool saveIniToFile(QString &path, QString &file);
     bool loadIni(QString &pathFile);
+    void listIniEntries();
+
+    bool checkIniInputs();
+    bool checkIniMeta();
+    bool checkIniOutputs();
+    bool checkIniPlugins();
 
     QString getAttribs();
 private:
     ini::IniFile myIni;
 };
 
-#endif // INIFILE_H
+

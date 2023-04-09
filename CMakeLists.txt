@@ -16,8 +16,10 @@ add_executable(header_docu_qt
   main.cpp
   Includes/cxxopts.hpp
   Includes/inicpp.h
-  Includes/inifile.h
-  Includes/inifile.cpp
+  Includes/rz_inifile.h
+  Includes/rz_inifile.cpp
+  Includes/rz_snippets.h
+  Includes/rz_snippets.cpp
 )
 target_link_libraries(header_docu_qt Qt${QT_VERSION_MAJOR}::Core)
 
