@@ -312,16 +312,20 @@ writerDir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Deskt
 Plug-In loader-test with errors
 (missmatched identifier within the plug-in)
 
+wrong identifier:
+> Q_DECLARE_INTERFACE(Plugin, "org.somewhere.my_plugin");
+
+correct identifier:
 > Q_DECLARE_INTERFACE(Plugin, "net.hase-zheng.header_docu_plugin");
 
 ```
-Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhtml_plugin.so"
-Loaded:  "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhtml_plugin.so"
+Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
+Loaded:  "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
 Plugin Constructed
-Could not cast:  "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhtml_plugin.so"
-Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so"
-qt.core.plugin.loader: /home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so: failed to map to memory: Das Argument ist ungültig
-Error:  "/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so"  Error:  "The file '/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/test.so' is not a valid Qt plugin."
+Could not cast:  "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
+Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so"
+qt.core.plugin.loader: /home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so: failed to map to memory: Das Argument ist ungültig
+Error:  "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so"  Error:  "The file '/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so' is not a valid Qt plugin."
 Plugins ParserDir has no valid plugins
 program criterias missmatch
 Plugin Deconstructed
