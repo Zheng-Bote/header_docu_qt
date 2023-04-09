@@ -116,19 +116,18 @@ see:
 
 **cxxopts**
 
-a lightweight C++ option parser library, supporting the standard GNU style syntax for options.
-
+a lightweight C++ option parser library, supporting the standard GNU style syntax for options. +
 https://github.com/jarro2783/cxxopts
 
 **inifile-cpp**
 
 inifile-cpp is a simple and easy to use single header-only ini file en- and decoder for C++.
-
 https://github.com/Rookfighter/inifile-cpp
 
 **OpenSSL**
 
 OpenSSL - a robust, commercial-grade, full-featured toolkit for general-purpose cryptography and secure communication.
+https://www.openssl.org/
 
 OpenSSL (Library tested: OpenSSL 3.0.2 15 Mar 2022; Linux: openssl-dev) is needed for creating SHA2-256Bit Hashes for strings and files.
 
