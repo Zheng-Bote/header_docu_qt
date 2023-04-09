@@ -281,18 +281,30 @@ Project Link: [https://github.com/Zheng-Bote/https://github.com/Zheng-Bote/heade
 
 ```
 [Input]
-Dir=/Volumes/500GB/Dev/QT/header_docu_qt/Inputs
+# folder with files to parse
+Dir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Inputs
+# file extensions to parse
 Extensions=*.h, *.hpp, *.c, *.cpp
+
 [Meta]
+# file attributes
 Attributes=FILE_PERM, LAST_MODIFIED, FILE_SIZE, FILE_HASH_SHA256
+# header attributes to parse
 Metadata=TITLE, BRIEF, DESC, AUTHOR, LICENSE, VERSION, COPYRIGHT, SOURCE, COMMENT, SYNTAX, HISTORY, DEPENDENCIES
+
 [Output]
-Dir=/Volumes/500GB/Dev/QT/header_docu_qt/Outputs
+# output folder
+Dir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Outputs
+# output type
 Filetype=.json
+# all parsed results in one single file (true), or one output file for each parsed file (singleFile=false)
 singleFile=false
+
 [Plugins]
-parserDir=/Volumes/500GB/Dev/QT/header_docu_qt/Plugins/parser
-writerDir=/Volumes/500GB/Dev/QT/header_docu_qt/Plugins/writer
+# plug-ins folder for parser
+parserDir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser
+# plug-ins folder for output writer
+writerDir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/writer
 ```
 
 **Plugin-Loader**
