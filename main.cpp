@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     defaultInifile.append(".ini");
     QDir path = QDir::currentPath();
     QString dir = path.path();
+    QMap<QString, QString> pluginMap;
 
     Inifile Inifile;
     Snippets Snippets;
@@ -78,7 +79,10 @@ int main(int argc, char *argv[])
     Snippets.checkBool(Inifile.checkIniInputs());
     Snippets.checkBool(Inifile.checkIniMeta());
     Snippets.checkBool(Inifile.checkIniOutputs());
-    Snippets.checkBool(Inifile.checkIniPlugins());
+    Snippets.checkBool(Inifile.checkIniPlugins(Snippets, pluginMap));
+
+    // get parser plugins
+
 
 
     // the end

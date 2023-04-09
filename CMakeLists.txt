@@ -20,6 +20,7 @@ add_executable(header_docu_qt
   Includes/rz_inifile.cpp
   Includes/rz_snippets.h
   Includes/rz_snippets.cpp
+  Includes/rz_header_docu_plugins.h
 )
 target_link_libraries(header_docu_qt Qt${QT_VERSION_MAJOR}::Core)
 

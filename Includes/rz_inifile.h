@@ -9,6 +9,7 @@
 /* https://github.com/Rookfighter/inifile-cpp */
 #include "inicpp.h"
 
+#include "rz_snippets.h"
 
 class Inifile
 {
@@ -27,9 +28,8 @@ public:
     bool checkIniInputs();
     bool checkIniMeta();
     bool checkIniOutputs();
-    bool checkIniPlugins();
+    bool checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &pluginMap);
 
-    QString getAttribs();
 private:
     ini::IniFile myIni;
 };

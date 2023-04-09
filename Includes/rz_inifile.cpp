@@ -217,10 +217,12 @@ bool Inifile::checkIniOutputs()
     return true;
 }
 
-bool Inifile::checkIniPlugins()
+bool Inifile::checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &pluginMap)
 {
     std::string pluginsParserDir = myIni["Plugins"]["parserDir"].as<std::string>();
     std::string pluginsWriterDir = myIni["Plugins"]["writerDir"].as<std::string>();
+    QStringList parserPlugins, writerPlugins;
+    QString dir;
 
     // pluginsParserDir
     if(pluginsParserDir.empty() == true) {
@@ -232,6 +234,19 @@ bool Inifile::checkIniPlugins()
         qWarning() << "Plugins ParserDir doesn't exist: " << pluginsParserDir;
         return false;
     }
+    // check for dir entries matching to parser plugins extensions
+    dir = pluginsParserDir.c_str();
+    parserPlugins = Snippets.getPlugins(dir);
+    if(parserPlugins.isEmpty() == true) {
+        qWarning() << "Plugins ParserDir has no plugins: " << parserPlugins.length();
+        return false;
+    }
+    // test plugins
+    if(Snippets.testPlugins(pluginMap, parserPlugins) == false) {
+        qWarning() << "Plugins ParserDir has no valid plugins";
+        return false;
+    }
+
 
     // pluginsWriterDir
     if(pluginsWriterDir.empty() == true) {
@@ -243,12 +258,20 @@ bool Inifile::checkIniPlugins()
         qWarning() << "Plugins WriterDir doesn't exist: " << pluginsWriterDir;
         return false;
     }
+    // check for dir entries matching writer plugins extensions
+    dir = pluginsWriterDir.c_str();
+    writerPlugins = Snippets.getPlugins(dir);
+    if(writerPlugins.isEmpty() == true) {
+        qWarning() << "Plugins WriterDir has no plugins: " << writerPlugins.length();
+        return false;
+    }
+    // test plugins
+    if(Snippets.testPlugins(pluginMap, writerPlugins) == false) {
+        qWarning() << "Plugins WriterDir has no valid plugins";
+        return false;
+    }
 
     return true;
 }
 
-QString Inifile::getAttribs()
-{
-    std::string attribs = myIni["Meta"]["Attributes"].as<std::string>();
-    return attribs.c_str();
-}
+
