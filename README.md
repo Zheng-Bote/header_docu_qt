@@ -282,7 +282,7 @@ Project Link: [https://github.com/Zheng-Bote/https://github.com/Zheng-Bote/heade
 ```
 [Input]
 # folder with files to parse
-Dir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Inputs
+Dir=/Volume/500GB/Dev/QT/header_docu_qt/Inputs
 # file extensions to parse
 Extensions=*.h, *.hpp, *.c, *.cpp
 
@@ -294,7 +294,7 @@ Metadata=TITLE, BRIEF, DESC, AUTHOR, LICENSE, VERSION, COPYRIGHT, SOURCE, COMMEN
 
 [Output]
 # output folder
-Dir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Outputs
+Dir=/Volume/500GB/Dev/QT/header_docu_qt/Outputs
 # output type
 Filetype=.json
 # all parsed results in one single file (true), or one output file for each parsed file (singleFile=false)
@@ -302,32 +302,41 @@ singleFile=false
 
 [Plugins]
 # plug-ins folder for parser
-parserDir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser
+parserDir=/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser
 # plug-ins folder for output writer
-writerDir=/home/zb_bamboo/Documents/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/writer
+writerDir=/Volume/500GB/Dev/QT/header_docu_qt/Plugins/writer
 ```
 
 **Plugin-Loader**
 
-Plug-In loader-test with errors
-(missmatched identifier within the plug-in)
+Plug-In loader-test
 
 wrong identifier:
 > Q_DECLARE_INTERFACE(Plugin, "org.somewhere.my_plugin");
+
+```
+Loading... "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
+Loaded:  "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
+Plugin Constructed
+Could not cast:  "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
+Loading... "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/test.so"
+qt.core.plugin.loader: /Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/test.so: failed to map to memory: Das Argument ist ungültig
+Error:  "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/test.so"  Error:  "The file '/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/test.so' is not a valid Qt plugin."
+Plugins ParserDir has no valid plugins
+program criterias missmatch
+Plugin Deconstructed
+```
 
 correct identifier:
 > Q_DECLARE_INTERFACE(Plugin, "net.hase-zheng.header_docu_plugin");
 
 ```
-Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
-Loaded:  "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
-Plugin Constructed
-Could not cast:  "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/libhtml_plugin.so"
-Loading... "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so"
-qt.core.plugin.loader: /home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so: failed to map to memory: Das Argument ist ungültig
-Error:  "/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so"  Error:  "The file '/home/zb_bamboo/Documents/QT/header_docu_qt/Plugins/parser/test.so' is not a valid Qt plugin."
-Plugins ParserDir has no valid plugins
-program criterias missmatch
+Loading... "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_md_parser_plugin.so"
+Loaded:  "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_md_parser_plugin.so"
+Plugin Constructor
+Test from Plugin:  "Test: Markdown parser plugin"
+MdParserPlugin::Name:  "markdown"
+MdParserPlugin::parseFile:  "under construction"
 Plugin Deconstructed
 ```
 
