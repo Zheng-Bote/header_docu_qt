@@ -28,7 +28,7 @@ public:
     bool checkIniInputs();
     bool checkIniMeta();
     bool checkIniOutputs();
-    bool checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &pluginMap);
+    bool checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &pluginParserMap, QMap<QString, QString> &pluginWriterMap);
 
 private:
     ini::IniFile myIni;

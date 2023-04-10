@@ -1,3 +1,14 @@
+/**
+ * @file main.cpp
+ * @author ZHENG Robert (www.robert.hase-zheng.net)
+ * @brief
+ * @version 0.4.0
+ * @date 2023-04-10
+ *
+ * @copyright Copyright (c) ZHENG Robert 2023
+ *
+ */
+
 #include <QCoreApplication>
 
 #include <iostream>
@@ -11,7 +22,7 @@
 #include "Includes/rz_snippets.h"
 
 
-const std::string VERSION = "00.03.00";
+const std::string VERSION = "00.04.00";
 
 
 int main(int argc, char *argv[])
@@ -24,7 +35,8 @@ int main(int argc, char *argv[])
     defaultInifile.append(".ini");
     QDir path = QDir::currentPath();
     QString dir = path.path();
-    QMap<QString, QString> pluginMap;
+    QMap<QString, QString> pluginParserMap;
+    QMap<QString, QString> pluginWriterMap;
 
     Inifile Inifile;
     Snippets Snippets;
@@ -79,10 +91,17 @@ int main(int argc, char *argv[])
     Snippets.checkBool(Inifile.checkIniInputs());
     Snippets.checkBool(Inifile.checkIniMeta());
     Snippets.checkBool(Inifile.checkIniOutputs());
-    Snippets.checkBool(Inifile.checkIniPlugins(Snippets, pluginMap));
+    Snippets.checkBool(Inifile.checkIniPlugins(Snippets, pluginParserMap, pluginWriterMap));
 
-    // get parser plugins
-
+     // get parser plugins
+    qInfo() << "available parser plugins:";
+    for (auto [key, value] : pluginParserMap.asKeyValueRange()) {
+        qInfo() << key << ": " << value;
+    }
+    qInfo() << "available writer plugins:";
+    for (auto [key, value] : pluginWriterMap.asKeyValueRange()) {
+        qInfo() << key << ": " << value;
+    }
 
 
     // the end

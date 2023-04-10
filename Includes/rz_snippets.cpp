@@ -22,8 +22,13 @@ QStringList Snippets::getPlugins(QString &path)
     QDir dir(path);
     QFileInfoList list = dir.entryInfoList(filter);
     foreach(QFileInfo file, list) {
-        plugins.append(file.filePath());
-        // Mac: if(!file.isSymLink()) plugins.append(file.filePath());
+        #ifdef Q_OS_LINUX
+            plugins.append(file.filePath());
+        #elif defined(Q_OS_MACX)
+            if(!file.isSymLink()) {
+                plugins.append(file.filePath());
+            }
+        #endif
     }
 
     return plugins;

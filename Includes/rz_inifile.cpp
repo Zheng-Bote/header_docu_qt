@@ -217,7 +217,7 @@ bool Inifile::checkIniOutputs()
     return true;
 }
 
-bool Inifile::checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &pluginMap)
+bool Inifile::checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &pluginParserMap, QMap<QString, QString> &pluginWritererMap)
 {
     std::string pluginsParserDir = myIni["Plugins"]["parserDir"].as<std::string>();
     std::string pluginsWriterDir = myIni["Plugins"]["writerDir"].as<std::string>();
@@ -242,7 +242,7 @@ bool Inifile::checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &plugin
         return false;
     }
     // test plugins
-    if(Snippets.testPlugins(pluginMap, parserPlugins) == false) {
+    if(Snippets.testPlugins(pluginParserMap, parserPlugins) == false) {
         qWarning() << "Plugins ParserDir has no valid plugins";
         return false;
     }
@@ -266,7 +266,7 @@ bool Inifile::checkIniPlugins(Snippets &Snippets, QMap<QString, QString> &plugin
         return false;
     }
     // test plugins
-    if(Snippets.testPlugins(pluginMap, writerPlugins) == false) {
+    if(Snippets.testPlugins(pluginWritererMap, writerPlugins) == false) {
         qWarning() << "Plugins WriterDir has no valid plugins";
         return false;
     }
