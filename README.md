@@ -61,24 +61,42 @@ With great respect to Doxygen, JSDoc or DoxDox, but they all reading / parsing t
 
 _scanned / collected Meta data:_
 
--   TITLE
--   BRIEF
--   DESC
--   AUTHOR
--   LICENSE
--   VERSION
--   COPYRIGHT
--   SOURCE
--   COMMENT
--   SYNTAX
--   HISTORY
--   DEPENDENCIES
--   FILE_PERM           (file permssions)
--   LAST_MODIFIED       (file last modified)
--   FILE_SIZE           (file size in bytes)
--   FILE_HASH_SHA256    (SHA2-256 filehash)
+- FILE
+- TITLE
+- AUTHOR
+- BRIEF"
+- VERSION
+- DATE
+- DESC
+- DESCRIPTION
+- LICENSE
+- COPYRIGHT
+- SOURCE
+- COMMENT
+- SYNTAX
+- DEPENDENCIES
+- HISTORY
 
-So, this tool is focussed on older libraries which doesn't use the docs-as-code approach.
+_scanned / collected file attributes:_
+
+- FILE_Name
+- FILE_baseFileName
+- FILE_completeSuffix
+- FILE_baseDirName
+- FILE_created_localtime
+- FILE_LastModified_localtime
+- FILE_lastModified_humanUTC
+- FILE_lastModified_stringUTC
+- FILE_lastModified_timeUTC
+- FILE_lastModified_timeUtcOffset
+- FILE_lastModified_timeZAbbreviation
+- FILE_Perm_Numeric
+- FILE_Perm_AlphaNumeric
+- FILE_Size
+- FILE_SHA256_Hash
+- FILE_Scan_localTime
+- FILE_Scan_UTCcurrent
+
 
 ### built with
 
