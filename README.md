@@ -100,7 +100,7 @@ _scanned / collected file attributes:_
 
 ### built with
 
-This is yet another version of the commandline tool, extended and written in QT 6.5 C++17.
+GNU/Linux 5.15.0-69-generic x86_64 and QT 6.5 C++17.
 
 **There are other, older versions:**
 
