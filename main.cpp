@@ -2,7 +2,7 @@
  * @file main.cpp
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief
- * @version 0.4.0
+ * @version 0.5.0
  * @date 2023-04-10
  *
  * @copyright Copyright (c) ZHENG Robert 2023
@@ -20,9 +20,10 @@
 
 #include "Includes/rz_inifile.h"
 #include "Includes/rz_snippets.h"
+#include "Includes/rz_dirfileinfo.h"
 
 
-const std::string VERSION = "00.04.00";
+const std::string VERSION = "00.05.00";
 
 
 int main(int argc, char *argv[])
@@ -71,6 +72,7 @@ int main(int argc, char *argv[])
     if (result.count("create")) {
         Inifile.createIni(dir);
         Snippets.checkBool(Inifile.saveIniToFile(dir, defaultInifile));
+        exit(0);
     }
 
     // load given Inifile
@@ -85,23 +87,29 @@ int main(int argc, char *argv[])
 
     if(result.count("listini")) {
         Inifile.listIniEntries();
+        exit(0);
     }
 
      // check confi
     Snippets.checkBool(Inifile.checkIniInputs());
     Snippets.checkBool(Inifile.checkIniMeta());
     Snippets.checkBool(Inifile.checkIniOutputs());
+    // get + check plugins
     Snippets.checkBool(Inifile.checkIniPlugins(Snippets, pluginParserMap, pluginWriterMap));
 
-     // get parser plugins
-    qInfo() << "available parser plugins:";
-    for (auto [key, value] : pluginParserMap.asKeyValueRange()) {
-        qInfo() << key << ": " << value;
+    // request single file parsing?
+    if(result.count("file")) {
+        std::string dirfile = result["file"].as<std::string>();
+        QString dirFile = dirfile.c_str();
+        DirFileInfo df(dirFile);
+
+        // test
+        //df.listMapFileAttribs();
+        for (QMap<QString, QString>::const_iterator it = df.mapFileAttribs.cbegin(), end = df.mapFileAttribs.cend(); it != end; ++it) {
+            qInfo() << "key: " << it.key() << ": " << it.value();
+        }
     }
-    qInfo() << "available writer plugins:";
-    for (auto [key, value] : pluginWriterMap.asKeyValueRange()) {
-        qInfo() << key << ": " << value;
-    }
+
 
 
     // the end
