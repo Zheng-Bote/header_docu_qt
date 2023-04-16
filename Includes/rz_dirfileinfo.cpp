@@ -1,3 +1,15 @@
+/**
+ * @file rz_dirfileinfo.cpp
+ * @author ZHENG Robert (www.robert.hase-zheng.net)
+ * @brief lib for header_docu
+ * @details class with methods to get folder and file infos
+ * @version 0.6.0
+ * @date 2023-04-15
+ *
+ * @copyright Copyright (c) ZHENG Robert 2023
+ *
+ */
+
 #include "rz_dirfileinfo.h"
 
 DirFileInfo::DirFileInfo()
@@ -49,6 +61,7 @@ void DirFileInfo::setterFileInfo(const QFileInfo &fi)
     QFileInfo dirinfo(path);
     mapFileAttribs["FILE_baseDirName"] = dirinfo.baseName();
     mapFileAttribs["FILE_Size"] = QString::number(fi.size());
+    DirFileInfo::setFileHashSHA256(pathFile);
     isFile = true;
 }
 
@@ -113,6 +126,33 @@ void DirFileInfo::setMapKeysInit()
     };
 }
 
+void DirFileInfo::setFileHashSHA256(QString &pathToFile)
+{
+    // 1 GB file size limit
+    const int QByteArrayMax = 1000000000l;
+
+    QFile myFile(pathToFile);
+    if (myFile.size() > QByteArrayMax)
+    {
+        qInfo() << "Your file is greater than 1Gb\n";
+        return;
+    }
+
+    if (!myFile.open(QIODevice::ReadOnly))
+    {
+        qInfo() << "Can't seem to open the file\n";
+        return;
+    }
+
+    // Read the whole file into a QByteArray
+    QByteArray fileData = myFile.read(QByteArrayMax);
+    myFile.close();
+
+    QString hash = QString(QCryptographicHash::hash((fileData), QCryptographicHash::Sha256).toHex());
+
+    mapFileAttribs["FILE_SHA256_Hash"] = hash;
+}
+
 const QByteArray DirFileInfo::alphanumPerm(const QFileInfo &fi)
 {
     QByteArray ret(fi.isDir()?"d":"-");
@@ -157,4 +197,5 @@ int DirFileInfo::numericPerm(QFileInfo &fi)
     mapFileAttribs["FILE_Perm_Numeric"] = permNumeric = QString::number(p);
     return p;
 }
+
 

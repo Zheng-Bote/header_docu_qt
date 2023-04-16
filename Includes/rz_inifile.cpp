@@ -1,3 +1,15 @@
+/**
+ * @file rz_initfile.cpp
+ * @author ZHENG Robert (www.robert.hase-zheng.net)
+ * @brief lib for header_docu
+ * @details class for reading and writing the inifile (configuration for header_docu)
+ * @version 0.6.0
+ * @date 2023-04-15
+ *
+ * @copyright Copyright (c) ZHENG Robert 2023
+ *
+ */
+
 #include "rz_inifile.h"
 
 Inifile::Inifile()
@@ -90,6 +102,13 @@ bool Inifile::loadIni(QString &pathFile)
     */
 
     return true;
+}
+
+QStringList Inifile::getInputExtensions()
+{
+    std::string extensionsStr = myIni["Input"]["Extensions"].as<std::string>();
+    QString qextensionsStr = extensionsStr.c_str();
+    return(qextensionsStr.remove(" ").split(",", Qt::SkipEmptyParts));
 }
 
 void Inifile::listIniEntries()

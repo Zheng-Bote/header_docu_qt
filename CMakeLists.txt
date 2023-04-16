@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Concurrent)
+find_package(Qt${QT_VERSION_MAJOR}  REQUIRED COMPONENTS Core Concurrent)
 
 add_executable(header_docu_qt
   main.cpp
@@ -24,8 +24,10 @@ add_executable(header_docu_qt
   Includes/rz_datetime.h
   Includes/rz_dirfileinfo.h
   Includes/rz_dirfileinfo.cpp
+  Includes/rz_inoutput.h
+  Includes/rz_inoutput.cpp
 )
-target_link_libraries(header_docu_qt Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(header_docu_qt Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Concurrent)
 
 install(TARGETS header_docu_qt
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

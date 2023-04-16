@@ -23,6 +23,7 @@ public:
     void createIni(QString &path);
     bool saveIniToFile(QString &path, QString &file);
     bool loadIni(QString &pathFile);
+    QStringList getInputExtensions();
     void listIniEntries();
 
     bool checkIniInputs();

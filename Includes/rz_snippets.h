@@ -15,4 +15,6 @@ public:
     void checkBool(const bool &boolCheck);
     QStringList getPlugins(QString &path);
     bool testPlugins(QMap<QString, QString> &pluginMap, QStringList &plugins);
+
+    void getDirsRecursive(QDir &root, QStringList filter);
 };

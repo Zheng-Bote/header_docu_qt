@@ -1,9 +1,10 @@
 /**
  * @file main.cpp
  * @author ZHENG Robert (www.robert.hase-zheng.net)
- * @brief
- * @version 0.5.0
- * @date 2023-04-10
+ * @brief header_docu
+ * @details fileheader parser for documentation with parser plugins and output writer plugins
+ * @version 0.6.0
+ * @date 2023-04-15
  *
  * @copyright Copyright (c) ZHENG Robert 2023
  *
@@ -22,9 +23,9 @@
 #include "Includes/rz_snippets.h"
 #include "Includes/rz_dirfileinfo.h"
 
+#include "Includes/rz_inoutput.h"
 
-const std::string VERSION = "00.05.00";
-
+const std::string VERSION = "00.06.00";
 
 int main(int argc, char *argv[])
 {
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
     options
         .set_width(100)
         .add_options()
+        ("a,auto", "run with default Inifile")
         ("c,create", "create Inifile")
         ("d,dir", "parse directory <dir>", cxxopts::value<std::string>())
         ("e,ext", "write to filetype (depends on Plugin):\n<.adoc> | <.csv> | <.html> | <.json> | <.md> | <.txt>", cxxopts::value<std::string>())
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
 
     auto result = options.parse(argc, argv);
 
-    if (result.count("help")) {
+    if (argc <= 1 || result.count("help")) {
         std::cout << options.help() << std::endl;
         exit(0);
     }
@@ -81,7 +83,9 @@ int main(int argc, char *argv[])
         QString dirFile = dirfile.c_str();
 
         Snippets.checkBool(Inifile.loadIni(dirFile));
-    } else {
+    }
+    else {
+        // load default Inifile
         Snippets.checkBool(Inifile.loadIni(defaultInifile));
     }
 
@@ -90,7 +94,7 @@ int main(int argc, char *argv[])
         exit(0);
     }
 
-     // check confi
+     // check config
     Snippets.checkBool(Inifile.checkIniInputs());
     Snippets.checkBool(Inifile.checkIniMeta());
     Snippets.checkBool(Inifile.checkIniOutputs());
@@ -103,13 +107,51 @@ int main(int argc, char *argv[])
         QString dirFile = dirfile.c_str();
         DirFileInfo df(dirFile);
 
-        // test
-        //df.listMapFileAttribs();
-        for (QMap<QString, QString>::const_iterator it = df.mapFileAttribs.cbegin(), end = df.mapFileAttribs.cend(); it != end; ++it) {
-            qInfo() << "key: " << it.key() << ": " << it.value();
+        // Test
+        if(pluginWriterMap.contains("json") == true) {
+            InputOutput* ioSingle = new InputOutput();
+            ioSingle->setwParser(pluginWriterMap["json"]);
+            ioSingle->setData(df.mapParseKeys,df.mapFileAttribs);
+            ioSingle->runner();
         }
+
+        exit(0);
     }
 
+    // request parse dir
+    if(result.count("dir")) {
+        std::string inputDir = result["dir"].as<std::string>();
+        QString strDir = inputDir.c_str();
+        QDir dir = strDir;
+        QStringList filters = Inifile.getInputExtensions();
+        Snippets.getDirsRecursive(dir, filters);
+
+        exit(0);
+    }
+
+    // ##### TEST #####
+    qInfo() << "##### Test von Main #####";
+    QThread::currentThread()->setObjectName("Main");
+    qInfo() << "Main: " << QThread::currentThread();
+    QThreadPool pool;
+    qInfo() << pool.maxThreadCount() << "Threads";
+    QFutureWatcher<void> watcher;
+
+    //InputOutput gh_markdown;
+    InputOutput* gh_markdown = new InputOutput();
+    //gh_markdown.run();
+    QObject::connect(&watcher, &QFutureWatcher<void>::finished,gh_markdown,&InputOutput::run); //Auto connect "should" work
+
+
+    //QFuture<void> future = QtConcurrent::map(list,&multiply);
+    QFuture<void> future = QtConcurrent::run(&pool, gh_markdown->run);
+    watcher.setFuture(future);
+
+    qInfo() << "Back in main!";
+
+    watcher.waitForFinished(); //Blocking
+
+    qInfo() << "Done!";
 
 
     // the end
