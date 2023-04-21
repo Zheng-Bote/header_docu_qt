@@ -24,14 +24,15 @@ public:
     //QThreadPool pool;
     void runner();
 
-    void setData(QMap<QString, QString> mapParseKeys, QMap<QString, QString> mapFileAttribs, QString outFile="/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Outputs/test.json");
+    void setData(QMap<QString, QString> mapParseKeys, QMap<QString, QString> mapFileAttribs);
+    void setFiles(QString inFile, QString outFile);
     void setpParser(QString pathToPlugin);
     void setwParser(QString pathToPlugin);
 
 private:
     QMap<QString, QString> mapParseKeys;
     QMap<QString, QString> mapFileAttribs;
-    QString outFile{};
+    QString inFile, outFile{};
     QString wPluginPath{}, pPluginPath{};
 
 signals:

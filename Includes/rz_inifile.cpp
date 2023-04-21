@@ -104,11 +104,81 @@ bool Inifile::loadIni(QString &pathFile)
     return true;
 }
 
+QString Inifile::getInputDir()
+{
+    std::string inputDir = myIni["Input"]["Dir"].as<std::string>();
+    return inputDir.c_str();
+}
+
 QStringList Inifile::getInputExtensions()
 {
     std::string extensionsStr = myIni["Input"]["Extensions"].as<std::string>();
     QString qextensionsStr = extensionsStr.c_str();
     return(qextensionsStr.remove(" ").split(",", Qt::SkipEmptyParts));
+}
+
+QStringList Inifile::getAttributes()
+{
+    std::string attributes = myIni["Meta"]["Attributes"].as<std::string>();
+    QString Attributes = attributes.c_str();
+    return(Attributes.remove(" ").split(",", Qt::SkipEmptyParts));
+}
+
+QStringList Inifile::getMetadata()
+{
+    std::string metadata = myIni["Meta"]["Metadata"].as<std::string>();
+    QString Metadata = metadata.c_str();
+    return(Metadata.remove(" ").split(",", Qt::SkipEmptyParts));
+}
+
+QString Inifile::getOutputDir()
+{
+    std::string outdir = myIni["Output"]["Dir"].as<std::string>();
+    return(outdir.c_str());
+}
+
+QString Inifile::getFileType()
+{
+    std::string filetype = myIni["Output"]["Filetype"].as<std::string>();
+    return(filetype.c_str());
+}
+
+bool Inifile::isSingleFileOutput()
+{
+    bool singleFile = myIni["Output"]["singleFile"].as<bool>();
+    return singleFile;
+}
+
+QString Inifile::getParserPluginsDir()
+{
+    std::string parserDir = myIni["Plugins"]["parserDir"].as<std::string>();
+    return(parserDir.c_str());
+}
+
+QString Inifile::getWriterPluginsDir()
+{
+    std::string writerDir = myIni["Plugins"]["writerDir"].as<std::string>();
+    return(writerDir.c_str());
+}
+
+QString Inifile::setInputDir(std::string inputDir)
+{
+    myIni["Input"]["Dir"] = inputDir;
+}
+
+QStringList Inifile::setInputExtensions(std::string inputExtension)
+{
+    myIni["Input"]["Extensions"] = inputExtension;
+}
+
+QString Inifile::setOutputDir(std::string outputDir)
+{
+    myIni["Output"]["Dir"] = outputDir;
+}
+
+QString Inifile::setFileType(std::string fileType)
+{
+    myIni["Output"]["Filetype"] = fileType;
 }
 
 void Inifile::listIniEntries()
@@ -135,23 +205,56 @@ bool Inifile::checkIniInputs()
     std::string inputDir = myIni["Input"]["Dir"].as<std::string>();
     std::string inputExtensionsStr = myIni["Input"]["Extensions"].as<std::string>();
 
+    QFileInfo fi(inputDir.c_str());
+    QDir dir(inputDir.c_str());
 
+    if(fi.exists() == false) {
+        qWarning() << "Input doesn't exist: " << inputDir;
+        return false;
+    }
+    if(fi.isFile() == true) {
+
+    }
+    else if(fi.isDir() == true){
+        if(dir.isEmpty(QDir:: NoDotAndDotDot | QDir::Files)) {
+            qWarning() << "Input directory is empty: " << inputDir;
+            return false;
+        }
+        // Extensions
+        if(inputExtensionsStr.empty() == true) {
+            qWarning() << "No Input extensions defined";
+            return false;
+        }
+
+        // check for dir entries matching to extensions
+        QString qextensionsStr = inputExtensionsStr.c_str();
+        QStringList extensions = qextensionsStr.remove(" ").split(",");
+
+        QFileInfoList list = dir.entryInfoList(extensions);
+        if(list.isEmpty() == true) {
+            qWarning() << "Input directory has no files with matching extension: " << list.length();
+            return false;
+        }
+    }
+
+    if(fi.isReadable() == false) {
+        qWarning() << "Input is not readable: " << inputDir;
+        return false;
+    }
+
+    /*
     // Input Dir
     if(inputDir.empty() == true){
         qWarning() << "No Input directory defined: " << inputDir;
         return false;
     }
-    QDir dir(inputDir.c_str());
+
     if(dir.exists() == false) {
         qWarning() << "Input directory doesn't exist: " << inputDir;
         return false;
     }
     if(dir.isReadable() == false) {
         qWarning() << "Input directory is not readable: " << inputDir;
-        return false;
-    }
-    if(dir.isEmpty(QDir:: NoDotAndDotDot | QDir::Files)) {
-        qWarning() << "Input directory is empty: " << inputDir;
         return false;
     }
 
@@ -169,10 +272,6 @@ bool Inifile::checkIniInputs()
     if(list.isEmpty() == true) {
         qWarning() << "Input directory has no files with matching extension: " << list.length();
         return false;
-    }
-    /*
-    foreach(QFileInfo file, list) {
-        qInfo() << "file: " << file.path() << " : " << file.fileName();
     }
     */
 

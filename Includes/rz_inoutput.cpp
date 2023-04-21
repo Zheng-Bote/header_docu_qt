@@ -3,8 +3,8 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief lib for header_docu
  * @details class with threaded methods for Input / Output
- * @version 0.6.0
- * @date 2023-04-15
+ * @version 0.7.0
+ * @date 2023-04-21
  *
  * @copyright Copyright (c) ZHENG Robert 2023
  *
@@ -28,7 +28,6 @@ void test() {
     Plugin* plugin = qobject_cast<Plugin*>(loader.instance());
     if(plugin) {
         qInfo() << "Plugin loaded: " << plugin->getVersion();
-        plugin->parseFile("/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/ESP32_libs-main/rz_bme680.h");
     }
 
     // writer
@@ -78,7 +77,9 @@ void InputOutput::runner()
     Plugin* pPlugin = qobject_cast<Plugin*>(pLoader.instance());
     if(pPlugin) {
         qInfo() << "Plugin loaded: " << pPlugin->getVersion();
-        pPlugin->writeFile(mapParseKeys, mapFileAttribs, outFile);
+        //qInfo() << "InputOutput::runner: infile: " << inFile;
+
+        pPlugin->parseFile(mapParseKeys, inFile);
     }
 
     QPluginLoader wLoader(wPluginPath);
@@ -94,22 +95,32 @@ void InputOutput::runner()
         qInfo() << "Plugin loaded: " << wPlugin->getVersion();
         wPlugin->writeFile(mapParseKeys, mapFileAttribs, outFile);
     }
+
 }
 
-void InputOutput::setData(QMap<QString, QString> parseKeys, QMap<QString, QString> fileAttribs, QString oFile)
+void InputOutput::setFiles(QString infile, QString outfile)
+{
+    inFile = infile;
+    outFile = outfile;
+
+    //qInfo() << "InputOutput::setFiles: " << inFile << " " << outFile;
+}
+
+void InputOutput::setData(QMap<QString, QString> parseKeys, QMap<QString, QString> fileAttribs)
 {
     mapParseKeys = parseKeys;
     mapFileAttribs = fileAttribs;
-    outFile = oFile;
 }
 
 void InputOutput::setpParser(QString pathToPlugin)
 {
+    //qInfo() << "InputOutput::setpParser: " << pathToPlugin;
     pPluginPath = pathToPlugin;
 }
 
 void InputOutput::setwParser(QString pathToPlugin)
 {
+    //qInfo() << "InputOutput::setwParser: " << pathToPlugin;
     wPluginPath = pathToPlugin;
 }
 

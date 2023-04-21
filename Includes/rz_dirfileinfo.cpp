@@ -58,11 +58,14 @@ void DirFileInfo::setterFileInfo(const QFileInfo &fi)
     mapFileAttribs["FILE_baseFileName"] = fi.baseName();
     pathFile = QDir::cleanPath(fi.filePath());
     path = fi.absolutePath();
+    mapFileAttribs["FILE_absolutePath"] = path;
     QFileInfo dirinfo(path);
     mapFileAttribs["FILE_baseDirName"] = dirinfo.baseName();
     mapFileAttribs["FILE_Size"] = QString::number(fi.size());
     DirFileInfo::setFileHashSHA256(pathFile);
     isFile = true;
+
+    // qInfo() << "DirFileInfo::setterFileInfo: " << fi.fileName();
 }
 
 void DirFileInfo::setterDirInfo(QString &pathToFile)

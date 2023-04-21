@@ -181,14 +181,17 @@ file header parser
 Usage:
   ./header_docu_qt [OPTION...]
 
+  -a, --auto      run with default Inifile
   -c, --create    create Inifile
   -d, --dir arg   parse directory <dir>
-  -e, --ext arg   write to filetype (depends on Plugin):
-                  <.adoc> | <.csv> | <.html> | <.json> | <.md> | <.txt>
+  -e, --ext arg   file extension to search for. E.g.:
+                  <*.h> | <*.hpp> | <*.c> | <*.cpp>
   -f, --file arg  parse <pathTo/fileName>
   -i, --ini arg   use Inifile <pathTo/inifile> (default: ./header_docu_qt.ini)
-  -l, --listini   list Inifile
+  -l, --listini   list Inifile (optional with --ini <pathTo/IniFile>)
   -o, --out arg   output directory <dir>
+  -t, --type arg  output type (depends on Plugin):
+                  <adoc> | <csv> | <html> | <json> | <md> | <txt>
   -v, --version   Print program and version
   -h, --help      Print help
 ```
@@ -246,7 +249,7 @@ under construction
 
 -   [x] save output results in separared file[s] or in one file
 
--   [ ] performance improvements for single outfiles (threaded)
+-   [x] performance improvements for single outfiles (threaded)
 
 -   [ ] create optional SBOM (spdx) json file[s]
 
@@ -290,7 +293,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ZHENG Robert Zhèng Bó Tè 郑 伯特
 
-Project Link: [https://github.com/Zheng-Bote/https://github.com/Zheng-Bote/header_docu_qt/](https://github.com/Zheng-Bote/header_docu_qt/)
+Project Link: [https://github.com/Zheng-Bote/header_docu_qt/](https://github.com/Zheng-Bote/header_docu_qt/)
 
 
 ## Screenshots and Samples
