@@ -352,12 +352,19 @@ correct identifier:
 > Q_DECLARE_INTERFACE(Plugin, "net.hase-zheng.header_docu_plugin");
 
 ```
-Loading... "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_md_parser_plugin.so"
-Loaded:  "/Volume/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_md_parser_plugin.so"
+Loading... "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhd_ghmd_parser_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhd_ghmd_parser_plugin.so"
 Plugin Constructor
-Test from Plugin:  "Test: Markdown parser plugin"
-MdParserPlugin::Name:  "markdown"
-MdParserPlugin::parseFile:  "under construction"
+Test from Plugin:  "Test: header_docu plugin"
+Plugin Name:  "gh_markdown"
+Plugin Version:  "Github Markdown parser-v0.3.0"
+Plugin Deconstructed
+Loading... "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/writer/libhd_json_writer_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/writer/libhd_json_writer_plugin.so"
+Plugin Constructor
+Test from Plugin:  "json" :  "Test: header_docu plugin"
+Plugin Name:  "json"
+Plugin Version:  "json writer-v0.3.0"
 Plugin Deconstructed
 ```
 
