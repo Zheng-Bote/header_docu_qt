@@ -68,7 +68,7 @@ Writing the header docu will be done by the defined writer pluging (e.g.: json, 
 The future default writer plugin will be adoc (ASCIIdoc) so fileheader_docu can be used as an export task (binary) to doctoolchain.
 
 
-_scanned / collected Meta data:_
+*scanned / collected Meta data:*_*
 
 (depends on parser-/writer plug-ins and inifile configuration)
 
@@ -88,7 +88,7 @@ _scanned / collected Meta data:_
 - DEPENDENCIES
 - HISTORY
 
-_scanned / collected file attributes:_
+*scanned / collected file attributes:*
 
 - FILE_Name
 - FILE_baseFileName
@@ -139,6 +139,10 @@ see:
 
 
 ### Prerequisites
+
+the Linux AppImage should run on most newer x86_64 Linux system 
+
+(for compiling and linking):
 
 -   PC or Laptop with Windows, MacOS or Linux \*\_^
 -   installed C++ compiler like g++ or clang++ with C++17 support
@@ -219,7 +223,7 @@ Usage:
 ```
 ./Fileheader_Docu-x86_64.AppImage --listini --ini <pathTo/inifile>
 ```
-*parse folder recursively for files with extension *.cpp, write to target folder with parser plug-in doxygen and writer plug-in json*
+_parse folder recursively for files with extension *.cpp, write to target folder with parser plug-in doxygen and writer plug-in json_
 ```
 ./Fileheader_Docu-x86_64.AppImage --dir ./ESP32_libs --ext *.cpp --out ./ESP32_libs/docu --parser doxygen --writer json
 ```
