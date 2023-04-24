@@ -65,7 +65,7 @@ Parsing will be done by the defined parser plugin (e.g.: gh_markdown, doxygen).
 
 Writing the header docu will be done by the defined writer pluging (e.g.: json, gh_markdown).
 
-The future default writer plugin will be adoc (ASCIIdoc) so fileheader_docu can be used as an export task (binary) to dochtoolchain.
+The future default writer plugin will be adoc (ASCIIdoc) so fileheader_docu can be used as an export task (binary) to doctoolchain.
 
 
 _scanned / collected Meta data:_
