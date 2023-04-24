@@ -3,8 +3,8 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief header_docu
  * @details fileheader parser for documentation with parser plugins and output writer plugins
- * @version 0.8.0
- * @date 2023-04-21
+ * @version 1.0.0
+ * @date 2023-04-23
  *
  * @copyright Copyright (c) ZHENG Robert 2023
  *
@@ -25,7 +25,8 @@
 
 #include "Includes/rz_inoutput.h"
 
-const std::string VERSION = "00.08.00";
+const std::string VERSION = "00.09.00";
+
 
 int main(int argc, char *argv[])
 {
@@ -41,7 +42,7 @@ int main(int argc, char *argv[])
     //Inifile;
     QString pathToInifile = prog.c_str();
     pathToInifile.append(".ini");
-    QString inputDir, outputDir, fileExtension, fileOutType;
+    QString inputDir, outputDir, fileExtension, fileInType, fileOutType;
 
     Inifile Inifile;
     Snippets Snippets;
@@ -58,7 +59,8 @@ int main(int argc, char *argv[])
         ("i,ini", "use Inifile <pathTo/inifile>", cxxopts::value<std::string>()->default_value(prog + ".ini"))
         ("l,listini", "list Inifile (optional with --ini <pathTo/IniFile>)")
         ("o,out", "output directory <dir>", cxxopts::value<std::string>())
-         ("t,type", "output type (depends on Plugin):\n<adoc> | <csv> | <html> | <json> | <md> | <txt>", cxxopts::value<std::string>())
+        ("p,parser", "how to parse the input (depends on Plugin):\n<gh_markdown> | <doxygen>", cxxopts::value<std::string>())
+        ("w,writer", "output type (depends on Plugin):\n<adoc> | <csv> | <html> | <json> | <md> | <txt>", cxxopts::value<std::string>())
         ("v,version", "Print program and version")
         ("h, help", "Print help")
         ;
@@ -90,6 +92,7 @@ int main(int argc, char *argv[])
     }
     else {
         // load default Inifile
+        qInfo() << "load default Ini: " << pathToInifile;
         Snippets.checkBool(Inifile.loadIni(pathToInifile));
     }
 
@@ -101,7 +104,7 @@ int main(int argc, char *argv[])
 
     // input dir
     if(result.count("dir")) {
-        Inifile.setInputDir(result["ini"].as<std::string>());
+        Inifile.setInputDir(result["dir"].as<std::string>());
     }
 
     // file extension
@@ -119,15 +122,30 @@ int main(int argc, char *argv[])
         Inifile.setOutputDir(result["out"].as<std::string>());
     }
 
-    // output type
+    // input type
+    if(result.count("parser")) {
+        Inifile.setParserType(result["parser"].as<std::string>());
+        std::string fileintype = result["parser"].as<std::string>();
+        fileInType = fileintype.c_str();
+    } else {
+        fileInType = Inifile.getParserType();
+    }
+
+    // output type => deprecated -> writer
     if(result.count("type")) {
         Inifile.setFileType(result["type"].as<std::string>());
+        Inifile.setWriterType(result["type"].as<std::string>());
         std::string fileoutputtype = result["type"].as<std::string>();
         fileOutType = fileoutputtype.c_str();
     }
-
-
-
+    // output type
+    if(result.count("writer")) {
+        Inifile.setWriterType(result["writer"].as<std::string>());
+        std::string fileoutputtype = result["writer"].as<std::string>();
+        fileOutType = fileoutputtype.c_str();
+    } else {
+        fileOutType = Inifile.getWriterType();
+    }
 
      // check config
     Snippets.checkBool(Inifile.checkIniInputs());
@@ -136,6 +154,10 @@ int main(int argc, char *argv[])
     // get + check plugins
     Snippets.checkBool(Inifile.checkIniPlugins(Snippets, pluginParserMap, pluginWriterMap));
     // check given plugin
+    if(pluginParserMap.contains(fileInType) == false) {
+        qWarning() << "no parser plug-in for input format " << fileInType << " found.";
+        exit(1);
+    }
     if(pluginWriterMap.contains(fileOutType) == false) {
         qWarning() << "no writer plug-in for output format " << fileOutType << " found.";
         exit(1);
@@ -148,10 +170,16 @@ int main(int argc, char *argv[])
         inputDir = Inifile.getInputDir();
         DirFileInfo df(inputDir);
         InputOutput* ioSingle = new InputOutput();
-        ioSingle->setpParser(pluginParserMap["gh_markdown"]);
+        ioSingle->setpParser(pluginParserMap[fileInType]);
         ioSingle->setwParser(pluginWriterMap[fileOutType]);
         ioSingle->setData(df.mapParseKeys,df.mapFileAttribs);
-        QString outPutFile = Inifile.getOutputDir() + "/" + df.mapFileAttribs["FILE_Name"] + "." + fileOutType;
+
+        //QString outPutFile = Inifile.getOutputDir() + "/" + df.mapFileAttribs["FILE_Name"] + "." + fileOutType;
+        QString outPutFile = ioSingle->setOutputDir(Inifile.getInputDir(), Inifile.getOutputDir(), df.mapFileAttribs["FILE_absolutePath"]);
+        qInfo() << "\n\ntarget: " << outPutFile;
+        ioSingle->makeOutputDir(outPutFile);
+        outPutFile.append("/" + df.mapFileAttribs["FILE_baseFileName"] + "." + fileOutType);
+        qInfo() << "target file: " << outPutFile;
         ioSingle->setFiles(Inifile.getInputDir(), outPutFile);
         ioSingle->runner();
 
@@ -160,15 +188,41 @@ int main(int argc, char *argv[])
 
     // request parse dir
     if(result.count("dir")) {
-        std::string inputDir = result["dir"].as<std::string>();
-        QString strDir = inputDir.c_str();
-        QDir dir = strDir;
+
+        QDir dir = Inifile.getInputDir();
+        inputDir = Inifile.getInputDir();
+        outputDir = Inifile.getOutputDir();
         QStringList filters = Inifile.getInputExtensions();
-        Snippets.getDirsRecursive(dir, filters);
+        //Snippets.getDirsRecursive(dir, filters, pluginParserMap[fileInType], pluginWriterMap[fileOutType]);
+        Snippets.getDirsRecursive(dir,
+                                  inputDir,
+                                  outputDir,
+                                  filters,
+                                  pluginParserMap[Inifile.getParserType()],
+                                  pluginWriterMap[Inifile.getWriterType()],
+                                  fileOutType);
 
         exit(0);
     }
 
+    if (result.count("auto")) {
+        QDir dir = Inifile.getInputDir();
+        inputDir = Inifile.getInputDir();
+        outputDir = Inifile.getOutputDir();
+        QStringList filters = Inifile.getInputExtensions();
+        //Snippets.getDirsRecursive(dir, filters, pluginParserMap[fileInType], pluginWriterMap[fileOutType]);
+        Snippets.getDirsRecursive(dir,
+                                  inputDir,
+                                  outputDir,
+                                  filters,
+                                  pluginParserMap[Inifile.getParserType()],
+                                  pluginWriterMap[Inifile.getWriterType()],
+                                  fileOutType);
+
+        exit(0);
+    }
+
+    /*
     // ##### TEST #####
     qInfo() << "##### Test von Main #####";
     QThread::currentThread()->setObjectName("Main");
@@ -190,7 +244,7 @@ int main(int argc, char *argv[])
     qInfo() << "Back in main!";
 
     watcher.waitForFinished(); //Blocking
-
+*/
     qInfo() << "Done!";
 
 
@@ -198,3 +252,4 @@ int main(int argc, char *argv[])
     exit(0);
     return a.exec();
 }
+

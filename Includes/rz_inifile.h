@@ -33,20 +33,24 @@ public:
     // Output
     QString getOutputDir();
     QString getFileType();
+    QString getParserType();
+    QString getWriterType();
     bool isSingleFileOutput();
     // Plugins
     QString getParserPluginsDir();
     QString getWriterPluginsDir();
 
     // Input
-    QString setInputDir(std::string inputDir);
-    QStringList setInputExtensions(std::string inputExtension);
+    void setInputDir(std::string inputDir);
+    void setInputExtensions(std::string inputExtension);
     // Meta
     // QStringList setAttributes();
     // QStringList setMetadata();
     // Output
-    QString setOutputDir(std::string outputDir);
-    QString setFileType(std::string fileType);
+    void setOutputDir(std::string outputDir);
+    void setFileType(std::string fileType);
+    void setParserType(std::string parsertype);
+    void setWriterType(std::string writertype);
     // bool setSingleFileOutput();
     // Plugins
     // QString setParserPluginsDir(QString parserPluginDir);

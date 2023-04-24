@@ -33,6 +33,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#plug-ins">Plug-Ins</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -47,7 +48,6 @@
 
 **Create documentation or SBOM SPDX from file header (e.g. \*.c[pp], \*.h[pp], ...)**
 
-:arrow_right: <mark>:warning: still under construction :warning:</mark> :arrow_left:
 
 *short description:*
 
@@ -59,7 +59,17 @@ With great respect to Doxygen, JSDoc or DoxDox, but they all reading / parsing t
 
 **For me I just need parsing the first comment block of a single textfile or every textfile with a defined file-extension in a folder, doesn't matter if \*.js, \*.h, \*.hpp or whatever**
 
+Fileheader_docu_ parse a single file or recursive directories for files with defined extensions (e.g.: *.c, *.cpp, *.h, *.js, *.ts).
+
+Parsing will be done by the defined parser plugin (e.g.: gh_markdown, doxygen).
+
+Writing the header docu will be done by the defined writer pluging (e.g.: json, gh_markdown).
+
+The future default writer plugin will be adoc (ASCIIdoc) so fileheader_docu can be used as an export task (binary) to dochtoolchain.
+
+
 _scanned / collected Meta data:_
+(depends on parser-/writer plug-ins and inifile configuration)
 
 - FILE
 - TITLE
@@ -179,32 +189,44 @@ OpenSSL (Library tested: OpenSSL 3.0.2 15 Mar 2022; Linux: openssl-dev) is neede
 ```
 file header parser
 Usage:
-  ./header_docu_qt [OPTION...]
+  ./Fileheader_Docu-x86_64.AppImage [OPTION...]
 
-  -a, --auto      run with default Inifile
-  -c, --create    create Inifile
-  -d, --dir arg   parse directory <dir>
-  -e, --ext arg   file extension to search for. E.g.:
-                  <*.h> | <*.hpp> | <*.c> | <*.cpp>
-  -f, --file arg  parse <pathTo/fileName>
-  -i, --ini arg   use Inifile <pathTo/inifile> (default: ./header_docu_qt.ini)
-  -l, --listini   list Inifile (optional with --ini <pathTo/IniFile>)
-  -o, --out arg   output directory <dir>
-  -t, --type arg  output type (depends on Plugin):
-                  <adoc> | <csv> | <html> | <json> | <md> | <txt>
-  -v, --version   Print program and version
-  -h, --help      Print help
+  -a, --auto        run with default Inifile
+  -c, --create      create Inifile
+  -d, --dir arg     parse directory <dir>
+  -e, --ext arg     file extension to search for. E.g.:
+                    <*.h> | <*.hpp> | <*.c> | <*.cpp>
+  -f, --file arg    parse <pathTo/fileName>
+  -i, --ini arg     use Inifile <pathTo/inifile> (default: ./Fileheader_Docu-x86_64.AppImage.ini)
+  -l, --listini     list Inifile (optional with --ini <pathTo/IniFile>)
+  -o, --out arg     output directory <dir>
+  -p, --parser arg  how to parse the input (depends on Plugin):
+                    <gh_markdown> | <doxygen>
+  -w, --writer arg  output type (depends on Plugin):
+                    <adoc> | <csv> | <html> | <json> | <md> | <txt>
+  -v, --version     Print program and version
+  -h, --help        Print help
 ```
 
 #### EXAMPLES:
 
+*create default Inifile*
 ```
-under construction
+./Fileheader_Docu-x86_64.AppImage --create
+```
+*list/show the given Inifile*
+```
+./Fileheader_Docu-x86_64.AppImage --listini --ini <pathTo/inifile>
+```
+*parse folder recursively for files with extension *.cpp, write to target folder with parser plug-in doxygen and writer plug-in json*
+```
+./Fileheader_Docu-x86_64.AppImage --dir ./ESP32_libs --ext *.cpp --out ./ESP32_libs/docu --parser doxygen --writer json
 ```
 
-*default:*
+*default: run with inifile ./Fileheader_Docu-x86_64.AppImage.ini*
 ```
-under construction
+./Fileheader_Docu-x86_64.AppImage -a
+./Fileheader_Docu-x86_64.AppImage --auto
 ```
 
 ### RETURN:
@@ -213,11 +235,24 @@ under construction
      
      exit(0)
 
+
+### Plug-Ins
+
+current available plug-ins:
+
+*Parser Plug-Ins*
+- gh_markdown (https://github.com/Zheng-Bote/hd_ghmd_parser_plugin)
+
+*Writer Plug-Ins*
+- gh_markdown (https://github.com/Zheng-Bote/hd_ghmd_writer_plugin)
+- json (https://github.com/Zheng-Bote/hd_json_writer_plugin)
+
+
 ### HISTORY:
 
 > | Version | Date       | Developer | Comments                           |
 > | ------- | ---------- | --------- | ---------------------------------- |
-> | 0.0.0   | 2023-04-07 | RZheng  | created                            |
+> | 1.0.0   | 2023-04-07 | RZheng    | created                            |
 
 <!-- ROADMAP -->
 
@@ -250,6 +285,8 @@ under construction
 -   [x] save output results in separared file[s] or in one file
 
 -   [x] performance improvements for single outfiles (threaded)
+
+-   [x] runable Linux AppImage
 
 -   [ ] create optional SBOM (spdx) json file[s]
 
@@ -303,9 +340,11 @@ Project Link: [https://github.com/Zheng-Bote/header_docu_qt/](https://github.com
 ```
 [Input]
 # folder with files to parse
-Dir=/Volume/500GB/Dev/QT/header_docu_qt/Inputs
+Dir=/Volume/500GB/Dev/C/Arduino_ESP32_libs
 # file extensions to parse
 Extensions=*.h, *.hpp, *.c, *.cpp
+# default parser plug-in
+Parser_Plugin=doxygen
 
 [Meta]
 # file attributes
@@ -315,11 +354,13 @@ Metadata=TITLE, BRIEF, DESC, AUTHOR, LICENSE, VERSION, COPYRIGHT, SOURCE, COMMEN
 
 [Output]
 # output folder
-Dir=/Volume/500GB/Dev/QT/header_docu_qt/Outputs
-# output type
+Dir=/Volume/500GB/Dev/C/Arduino_ESP32_libs/Docu
+# output type => deprecated -> Writer_Plugin
 Filetype=.json
 # all parsed results in one single file (true), or one output file for each parsed file (singleFile=false)
 singleFile=false
+# default writer plug-in
+Writer_Plugin=json
 
 [Plugins]
 # plug-ins folder for parser

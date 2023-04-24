@@ -3,12 +3,10 @@
 #include <QCoreApplication>
 
 #include <QObject>
-#include <QFuture>
-#include <QFutureWatcher>
-#include <QtConcurrent>
-#include <QThread>
-#include <QThreadPool>
+
 #include <QPluginLoader>
+#include <QDir>
+#include <QFileInfo>
 
 #include "rz_header_docu_plugins.h"
 
@@ -29,11 +27,15 @@ public:
     void setpParser(QString pathToPlugin);
     void setwParser(QString pathToPlugin);
 
+    QString setOutputDir(QString inputPath, QString outputPath, QString FILE_absolutePath);
+
+    void makeOutputDir(QString outputDir);
+
 private:
     QMap<QString, QString> mapParseKeys;
     QMap<QString, QString> mapFileAttribs;
-    QString inFile, outFile{};
-    QString wPluginPath{}, pPluginPath{};
+    QString inFile, outFile;
+    QString wPluginPath, pPluginPath;
 
 signals:
 

@@ -143,6 +143,18 @@ QString Inifile::getFileType()
     return(filetype.c_str());
 }
 
+QString Inifile::getParserType()
+{
+    std::string parsertype = myIni["Input"]["Parser_Plugin"].as<std::string>();
+    return(parsertype.c_str());
+}
+
+QString Inifile::getWriterType()
+{
+    std::string writertype = myIni["Output"]["Writer_Plugin"].as<std::string>();
+    return(writertype.c_str());
+}
+
 bool Inifile::isSingleFileOutput()
 {
     bool singleFile = myIni["Output"]["singleFile"].as<bool>();
@@ -161,24 +173,34 @@ QString Inifile::getWriterPluginsDir()
     return(writerDir.c_str());
 }
 
-QString Inifile::setInputDir(std::string inputDir)
+void Inifile::setInputDir(std::string inputDir)
 {
     myIni["Input"]["Dir"] = inputDir;
 }
 
-QStringList Inifile::setInputExtensions(std::string inputExtension)
+void Inifile::setInputExtensions(std::string inputExtension)
 {
     myIni["Input"]["Extensions"] = inputExtension;
 }
 
-QString Inifile::setOutputDir(std::string outputDir)
+void Inifile::setOutputDir(std::string outputDir)
 {
     myIni["Output"]["Dir"] = outputDir;
 }
 
-QString Inifile::setFileType(std::string fileType)
+void Inifile::setFileType(std::string fileType)
 {
     myIni["Output"]["Filetype"] = fileType;
+}
+
+void Inifile::setParserType(std::string parsertype)
+{
+    myIni["Input"]["Parser_Plugin"] = parsertype;
+}
+
+void Inifile::setWriterType(std::string writertype)
+{
+    myIni["Output"]["Writer_Plugin"] = writertype;
 }
 
 void Inifile::listIniEntries()

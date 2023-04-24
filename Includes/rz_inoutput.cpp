@@ -14,7 +14,7 @@
 
 
 void test() {
-    qInfo() << "InputOutput (test): " << QThread::currentThread();
+    //qInfo() << "InputOutput (test): " << QThread::currentThread();
 
     // parser
     QPluginLoader loader("/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhd_ghmd_parser_plugin.so");
@@ -48,8 +48,8 @@ void test() {
 
 InputOutput::InputOutput(QObject *parent) : QObject(parent)
 {
-    QThread::currentThread()->setObjectName("InputOutput");
-    qInfo() << "InputOutput: " << QThread::currentThread();
+    //QThread::currentThread()->setObjectName("InputOutput");
+    //qInfo() << "InputOutput: " << QThread::currentThread();
 }
 
 InputOutput::~InputOutput()
@@ -59,9 +59,9 @@ InputOutput::~InputOutput()
 
 void InputOutput::run()
 {
-    qInfo() << "InputOutput (run): " << QThread::currentThread();
+    //qInfo() << "InputOutput (run): " << QThread::currentThread();
     //QFuture<void> future = QtConcurrent::run(&pool, test);
-    test();
+    //test();
 }
 
 void InputOutput::runner()
@@ -95,7 +95,6 @@ void InputOutput::runner()
         qInfo() << "Plugin loaded: " << wPlugin->getVersion();
         wPlugin->writeFile(mapParseKeys, mapFileAttribs, outFile);
     }
-
 }
 
 void InputOutput::setFiles(QString infile, QString outfile)
@@ -122,6 +121,24 @@ void InputOutput::setwParser(QString pathToPlugin)
 {
     //qInfo() << "InputOutput::setwParser: " << pathToPlugin;
     wPluginPath = pathToPlugin;
+}
+
+QString InputOutput::setOutputDir(QString inputPath, QString outputPath, QString FILE_absolutePath)
+{
+    QFileInfo fi(inputPath);
+    inputPath = fi.absolutePath();
+
+    FILE_absolutePath.replace(inputPath, outputPath);
+    QDir newPath;
+    return(newPath.cleanPath(FILE_absolutePath));
+}
+
+void InputOutput::makeOutputDir(QString outputDir)
+{
+    QDir outDir;
+    if(outDir.mkpath(outputDir) == false) {
+        qWarning() << "cannot create output dir: " << outputDir;
+    }
 }
 
 void InputOutput::finished()
