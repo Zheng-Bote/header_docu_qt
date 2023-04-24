@@ -293,11 +293,10 @@ current available plug-ins:
 
 -   [x] runable Linux AppImage
 
--   [ ] create optional SBOM (spdx) json file[s]
+-   [ ] create optional SBOM (spdx) json file[s] => writer plug-in
 
--   [ ] upload optional SBOM (spdx) json to RDBMS
+-   [ ] upload optional SBOM (spdx) json to RDBMS => writer plug-in
 
--   [ ] build Linux binary
 
 
 Maybe a Kanban board will be established (soon)
