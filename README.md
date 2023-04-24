@@ -69,6 +69,7 @@ The future default writer plugin will be adoc (ASCIIdoc) so fileheader_docu can 
 
 
 _scanned / collected Meta data:_
+
 (depends on parser-/writer plug-ins and inifile configuration)
 
 - FILE
