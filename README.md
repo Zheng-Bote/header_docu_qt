@@ -254,7 +254,7 @@ _parse folder recursively for files with extension *.cpp, write to target folder
 
 ### RETURN:
 
-     2023-04-03 18:22:57 : 5 .cpp Files in folder ./src found. Output stored with format md in folder ./header_docu_cpp
+     2023-04-03 18:22:57 : 5 Files parsed with header parser gh_markdown. Output stored with format json in folder ./ESP32_libs/docu
      
      exit(0)
 
