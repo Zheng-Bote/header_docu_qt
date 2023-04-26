@@ -225,8 +225,8 @@ Usage:
 ./Fileheader_Docu-x86_64.AppImage --listini --ini <pathTo/inifile>
 ```
 _list available Plug-Ins_
-./Fileheader_Docu-x86_64.AppImage --plugins
 ```
+./Fileheader_Docu-x86_64.AppImage --plugins
 Parser Plug-Ins:
 ================
 Plugin Name:........doxygen
