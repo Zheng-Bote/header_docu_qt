@@ -17,6 +17,7 @@
 #include <QThread>
 #include <QThreadPool>
 #include "rz_dofile.h"
+#include <iostream>
 
 Snippets::Snippets()
 {}
@@ -89,6 +90,29 @@ bool Snippets::testPlugins(QMap<QString, QString> &pluginMap, QStringList &plugi
 
     // at least 1 valid plugin
     return true;
+}
+
+void Snippets::listPlugins(QStringList plugins)
+{
+    foreach (QString file, plugins) {
+        QPluginLoader loader(file);
+        if (!loader.load()) {
+            qDebug() << "Error: " << loader.fileName() << " Error: " << loader.errorString();
+            continue;
+        } else {
+            Plugin *plugin = qobject_cast<Plugin *>(loader.instance());
+            if (plugin) {
+                std::cout << std::left << std::setfill('.') << std::setw(20)
+                          << "Plugin Name:" << plugin->getName().toStdString() << std::endl;
+                std::cout << std::left << std::setfill('.') << std::setw(20)
+                          << "Version:" << plugin->getVersion().toStdString() << std::endl;
+                //qInfo() << "Plugin Name: " << plugin->getName() << "(" << plugin->getVersion() << ")";
+                loader.unload();
+            } else {
+                qDebug() << "Could not cast: " << loader.fileName();
+            }
+        }
+    }
 }
 
 void Snippets::setCountedFiles()

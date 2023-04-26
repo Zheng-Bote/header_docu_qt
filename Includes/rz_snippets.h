@@ -16,6 +16,7 @@ public:
     void checkBool(const bool &boolCheck);
     QStringList getPlugins(QString &path);
     bool testPlugins(QMap<QString, QString> &pluginMap, QStringList &plugins);
+    void listPlugins(QStringList parserPlugins);
 
     void setCountedFiles();
     int getCountedFiles();

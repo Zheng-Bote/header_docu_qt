@@ -205,10 +205,11 @@ Usage:
   -i, --ini arg     use Inifile <pathTo/inifile> (default: ./Fileheader_Docu-x86_64.AppImage.ini)
   -l, --listini     list Inifile (optional with --ini <pathTo/IniFile>)
   -o, --out arg     output directory <dir>
-  -p, --parser arg  how to parse the input (depends on Plugin):
-                    <gh_markdown> | <doxygen>
-  -w, --writer arg  output type (depends on Plugin):
-                    <adoc> | <csv> | <html> | <json> | <md> | <txt>
+  -p, --parser arg  how to parse the input (use --plugins to list available plugins):
+                    e.g.: <gh_markdown> | <doxygen>
+      --plugins     list available plugins
+  -w, --writer arg  output type (use --plugins to list available plugins):
+                    e.g.: <adoc> | <csv> | <html> | <json> | <md> | <txt>
   -v, --version     Print program and version
   -h, --help        Print help
 ```
@@ -222,6 +223,23 @@ Usage:
 *list/show the given Inifile*
 ```
 ./Fileheader_Docu-x86_64.AppImage --listini --ini <pathTo/inifile>
+```
+_list available Plug-Ins_
+./Fileheader_Docu-x86_64.AppImage --plugins
+```
+Parser Plug-Ins:
+================
+Plugin Name:........doxygen
+Version:............doxygen header parser-v1.0.0
+Plugin Name:........gh_markdown
+Version:............Github Markdown parser-v1.0.0
+
+Writer Plug-Ins:
+================
+Plugin Name:........gh_markdown
+Version:............Github Markdown writer-v1.1.0
+Plugin Name:........json
+Version:............json writer-v1.0.0
 ```
 _parse folder recursively for files with extension *.cpp, write to target folder with parser plug-in doxygen and writer plug-in json_
 ```
@@ -260,6 +278,7 @@ current available plug-ins:
 > | ------- | ---------- | --------- | ---------------------------------- |
 > | 1.0.0   | 2023-04-07 | RZheng    | created                            |
 > | 1.1.0   | 2023-04-25 | RZheng    | cleaned output                     |
+> | 1.2.0   | 2023-04-26 | RZheng    | list available Plug-Ins            |
 
 <!-- ROADMAP -->
 

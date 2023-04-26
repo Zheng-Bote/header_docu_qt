@@ -3,7 +3,7 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief header_docu
  * @details fileheader parser for documentation with parser plugins and output writer plugins
- * @version 1.1.0
+ * @version 1.2.0
  * @date 2023-04-25
  *
  * @copyright Copyright (c) ZHENG Robert 2023
@@ -25,7 +25,7 @@
 #include "Includes/rz_inoutput.h"
 #include "Includes/rz_snippets.h"
 
-const std::string VERSION = "01.01.00";
+const std::string VERSION = "01.02.00";
 
 int main(int argc, char *argv[])
 {
@@ -50,22 +50,33 @@ int main(int argc, char *argv[])
     Snippets Snippets;
 
     cxxopts::Options options(prog, "file header parser");
-    options
-        .set_width(100)
-        .add_options()
-        ("a,auto", "run with default Inifile")
-        ("c,create", "create Inifile")
-        ("d,dir", "parse directory <dir>", cxxopts::value<std::string>())
-        ("e,ext", "file extension to search for. E.g.:\n<*.h> | <*.hpp> | <*.c> | <*.cpp>", cxxopts::value<std::string>())
-        ("f,file", "parse <pathTo/fileName>", cxxopts::value<std::string>())
-        ("i,ini", "use Inifile <pathTo/inifile>", cxxopts::value<std::string>()->default_value(prog + ".ini"))
-        ("l,listini", "list Inifile (optional with --ini <pathTo/IniFile>)")
-        ("o,out", "output directory <dir>", cxxopts::value<std::string>())
-        ("p,parser", "how to parse the input (depends on Plugin):\n<gh_markdown> | <doxygen>", cxxopts::value<std::string>())
-        ("w,writer", "output type (depends on Plugin):\n<adoc> | <csv> | <html> | <json> | <md> | <txt>", cxxopts::value<std::string>())
-        ("v,version", "Print program and version")
-        ("h, help", "Print help")
-        ;
+    options.set_width(100)
+        .add_options()("a,auto",
+                       "run with default Inifile")("c,create",
+                                                   "create Inifile")("d,dir",
+                                                                     "parse directory <dir>",
+                                                                     cxxopts::value<std::string>())(
+            "e,ext",
+            "file extension to search for. E.g.:\n<*.h> | <*.hpp> | <*.c> | <*.cpp>",
+            cxxopts::value<std::string>())("f,file",
+                                           "parse <pathTo/fileName>",
+                                           cxxopts::value<std::string>())(
+            "i,ini",
+            "use Inifile <pathTo/inifile>",
+            cxxopts::value<std::string>()->default_value(
+                prog + ".ini"))("l,listini", "list Inifile (optional with --ini <pathTo/IniFile>)")(
+            "o,out",
+            "output directory <dir>",
+            cxxopts::value<std::string>())("p,parser",
+                                           "how to parse the input (use --plugins to list "
+                                           "available plugins):\ne.g.: <gh_markdown> | <doxygen>",
+                                           cxxopts::value<std::string>())("plugins",
+                                                                          "list available plugins")(
+            "w,writer",
+            "output type (use --plugins to list "
+            "available plugins):\ne.g.: <adoc> | <csv> | <html> | <json> | <md> | <txt>",
+            cxxopts::value<std::string>())("v,version", "Print program and version")("h, help",
+                                                                                     "Print help");
 
     auto result = options.parse(argc, argv);
 
@@ -77,8 +88,6 @@ int main(int argc, char *argv[])
         std::cout << prog << "-" << VERSION << std::endl;
         exit(0);
     }
-
-    qInfo() << datetime.getHumanUTC() << " : " << prog << "-" << VERSION << " started";
 
     // create default Inifile
     if (result.count("create")) {
@@ -151,7 +160,20 @@ int main(int argc, char *argv[])
         fileOutType = Inifile.getWriterType();
     }
 
-     // check config
+    // list plug-ins
+    if (result.count("plugins")) {
+        qInfo() << "Parser Plug-Ins:\n================";
+        QString pluginsDir = Inifile.getParserPluginsDir();
+        Snippets.listPlugins(Snippets.getPlugins(pluginsDir));
+        qInfo() << "\nWriter Plug-Ins:\n================";
+        pluginsDir = Inifile.getWriterPluginsDir();
+        Snippets.listPlugins(Snippets.getPlugins(pluginsDir));
+        exit(0);
+    }
+
+    qInfo() << datetime.getHumanUTC() << " : " << prog << "-" << VERSION << " started";
+
+    // check config
     Snippets.checkBool(Inifile.checkIniInputs());
     Snippets.checkBool(Inifile.checkIniMeta());
     Snippets.checkBool(Inifile.checkIniOutputs());
