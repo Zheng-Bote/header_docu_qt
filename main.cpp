@@ -3,8 +3,8 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief header_docu
  * @details fileheader parser for documentation with parser plugins and output writer plugins
- * @version 1.0.0
- * @date 2023-04-23
+ * @version 1.1.0
+ * @date 2023-04-25
  *
  * @copyright Copyright (c) ZHENG Robert 2023
  *
@@ -19,14 +19,13 @@
 /* https://github.com/jarro2783/cxxopts */
 #include "Includes/cxxopts.hpp"
 
-#include "Includes/rz_inifile.h"
-#include "Includes/rz_snippets.h"
+#include "Includes/rz_datetime.h"
 #include "Includes/rz_dirfileinfo.h"
-
+#include "Includes/rz_inifile.h"
 #include "Includes/rz_inoutput.h"
+#include "Includes/rz_snippets.h"
 
-const std::string VERSION = "00.09.00";
-
+const std::string VERSION = "01.01.00";
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +34,9 @@ int main(int argc, char *argv[])
     std::string prog = argv[0];
     QDir path = QDir::currentPath();
     QString dir = path.path();
+
+    DateTime datetime;
+    datetime.setDateTime();
 
     QMap<QString, QString> pluginParserMap;
     QMap<QString, QString> pluginWriterMap;
@@ -76,6 +78,8 @@ int main(int argc, char *argv[])
         exit(0);
     }
 
+    qInfo() << datetime.getHumanUTC() << " : " << prog << "-" << VERSION << " started";
+
     // create default Inifile
     if (result.count("create")) {
         Inifile.createIni(dir);
@@ -92,7 +96,7 @@ int main(int argc, char *argv[])
     }
     else {
         // load default Inifile
-        qInfo() << "load default Ini: " << pathToInifile;
+        //qInfo() << "load default Ini: " << pathToInifile;
         Snippets.checkBool(Inifile.loadIni(pathToInifile));
     }
 
@@ -169,6 +173,7 @@ int main(int argc, char *argv[])
     if(result.count("file")) {
         inputDir = Inifile.getInputDir();
         DirFileInfo df(inputDir);
+        df.addMapParseKeys(Inifile.getMetadata());
         InputOutput* ioSingle = new InputOutput();
         ioSingle->setpParser(pluginParserMap[fileInType]);
         ioSingle->setwParser(pluginWriterMap[fileOutType]);
@@ -176,14 +181,13 @@ int main(int argc, char *argv[])
 
         //QString outPutFile = Inifile.getOutputDir() + "/" + df.mapFileAttribs["FILE_Name"] + "." + fileOutType;
         QString outPutFile = ioSingle->setOutputDir(Inifile.getInputDir(), Inifile.getOutputDir(), df.mapFileAttribs["FILE_absolutePath"]);
-        qInfo() << "\n\ntarget: " << outPutFile;
+        //qInfo() << "\n\ntarget: " << outPutFile;
         ioSingle->makeOutputDir(outPutFile);
         outPutFile.append("/" + df.mapFileAttribs["FILE_baseFileName"] + "." + fileOutType);
-        qInfo() << "target file: " << outPutFile;
+        //qInfo() << "target file: " << outPutFile;
+        Snippets.setCountedFiles();
         ioSingle->setFiles(Inifile.getInputDir(), outPutFile);
         ioSingle->runner();
-
-        exit(0);
     }
 
     // request parse dir
@@ -200,9 +204,8 @@ int main(int argc, char *argv[])
                                   filters,
                                   pluginParserMap[Inifile.getParserType()],
                                   pluginWriterMap[Inifile.getWriterType()],
-                                  fileOutType);
-
-        exit(0);
+                                  fileOutType,
+                                  Inifile.getMetadata());
     }
 
     if (result.count("auto")) {
@@ -217,9 +220,8 @@ int main(int argc, char *argv[])
                                   filters,
                                   pluginParserMap[Inifile.getParserType()],
                                   pluginWriterMap[Inifile.getWriterType()],
-                                  fileOutType);
-
-        exit(0);
+                                  fileOutType,
+                                  Inifile.getMetadata());
     }
 
     /*
@@ -245,8 +247,13 @@ int main(int argc, char *argv[])
 
     watcher.waitForFinished(); //Blocking
 */
-    qInfo() << "Done!";
 
+    datetime.setDateTime();
+
+    // 2023-04-03 18:22:57 : 5 .cpp Files in folder ./src found. Output stored with format md in folder ./header_docu_cpp
+    qInfo() << datetime.getHumanUTC() << " : " << Snippets.getCountedFiles()
+            << " File(s) parsed with " << fileInType << " header parser. Output stored with format "
+            << fileOutType << " in folder: " << Inifile.getOutputDir();
 
     // the end
     exit(0);

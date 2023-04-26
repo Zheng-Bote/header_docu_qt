@@ -156,6 +156,13 @@ void DirFileInfo::setFileHashSHA256(QString &pathToFile)
     mapFileAttribs["FILE_SHA256_Hash"] = hash;
 }
 
+void DirFileInfo::addMapParseKeys(QStringList map_ParseKeys)
+{
+    foreach (const QString &str, map_ParseKeys) {
+        mapParseKeys[str] = "";
+    }
+}
+
 const QByteArray DirFileInfo::alphanumPerm(const QFileInfo &fi)
 {
     QByteArray ret(fi.isDir()?"d":"-");

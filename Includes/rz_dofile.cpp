@@ -14,7 +14,7 @@ void DoFile::run()
         //return;
     }
 
-    qDebug() << "Loaded: " << pLoader.fileName();
+    //qDebug() << "Loaded: " << pLoader.fileName();
 
     Plugin* pPlugin = qobject_cast<Plugin*>(pLoader.instance());
     if(pPlugin) {
@@ -28,7 +28,7 @@ void DoFile::run()
         //return;
     }
 
-    qDebug() << "Loaded: " << wLoader.fileName();
+    //qDebug() << "Loaded: " << wLoader.fileName();
 
     Plugin* wPlugin = qobject_cast<Plugin*>(wLoader.instance());
     if(wPlugin) {
@@ -36,5 +36,3 @@ void DoFile::run()
         wPlugin->writeFile(mapParseKeys, mapFileAttribs, outFile);
     }
 }
-
-

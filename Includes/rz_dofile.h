@@ -26,7 +26,6 @@ public:
     QString inFile, outFile;
     QString wPluginPath;
     QString pPluginPath;
-
 };
 
 #endif // DOFILE_H

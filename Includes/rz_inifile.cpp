@@ -3,7 +3,7 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief lib for header_docu
  * @details class for reading and writing the inifile (configuration for header_docu)
- * @version 0.6.0
+ * @version 0.7.0
  * @date 2023-04-15
  *
  * @copyright Copyright (c) ZHENG Robert 2023
@@ -263,39 +263,6 @@ bool Inifile::checkIniInputs()
         qWarning() << "Input is not readable: " << inputDir;
         return false;
     }
-
-    /*
-    // Input Dir
-    if(inputDir.empty() == true){
-        qWarning() << "No Input directory defined: " << inputDir;
-        return false;
-    }
-
-    if(dir.exists() == false) {
-        qWarning() << "Input directory doesn't exist: " << inputDir;
-        return false;
-    }
-    if(dir.isReadable() == false) {
-        qWarning() << "Input directory is not readable: " << inputDir;
-        return false;
-    }
-
-    // Extensions
-    if(inputExtensionsStr.empty() == true) {
-        qWarning() << "No Input extensions defined";
-        return false;
-    }
-
-    // check for dir entries matching to extensions
-    QString qextensionsStr = inputExtensionsStr.c_str();
-    QStringList extensions = qextensionsStr.remove(" ").split(",");
-
-    QFileInfoList list = dir.entryInfoList(extensions);
-    if(list.isEmpty() == true) {
-        qWarning() << "Input directory has no files with matching extension: " << list.length();
-        return false;
-    }
-    */
 
     return true;
 }

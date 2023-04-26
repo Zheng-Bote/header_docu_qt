@@ -22,6 +22,7 @@ public:
     void cleanPathToFile(QString &pathToFile);
 
     void listMapFileAttribs();
+    void addMapParseKeys(QStringList map_ParseKeys);
 
     rz_datetime::date_time dt;
     bool isFile{false};

@@ -91,6 +91,16 @@ bool Snippets::testPlugins(QMap<QString, QString> &pluginMap, QStringList &plugi
     return true;
 }
 
+void Snippets::setCountedFiles()
+{
+    countedFiles++;
+}
+
+int Snippets::getCountedFiles()
+{
+    return countedFiles;
+}
+
 void Snippets::getDirsRecursive(QDir &root, QStringList filter)
 {
     qInfo() << "---Listing---";
@@ -113,44 +123,53 @@ void Snippets::getDirsRecursive(QDir &root, QStringList filter)
         }
 }
 
-void Snippets::getDirsRecursive(QDir &root, QString &inputdir, QString &outputdir, QStringList filter, QString pluginParser, QString pluginWriter, QString fileOutType)
+void Snippets::getDirsRecursive(QDir &root,
+                                QString &inputdir,
+                                QString &outputdir,
+                                QStringList filter,
+                                QString pluginParser,
+                                QString pluginWriter,
+                                QString fileOutType,
+                                QStringList map_ParseKeys)
 {
         QThread::currentThread()->setObjectName("getDirsRecursive");
-        qInfo() << "Main: " << QThread::currentThread();
+        //qInfo() << "Main: " << QThread::currentThread();
         QThreadPool pool;
 
 
         QDir inputDir(inputdir);
-        qInfo() << "---Listing---";
+        //qInfo() << "---Listing---";
         foreach(QFileInfo fi, inputDir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot,QDir::Name))
         {
             if(fi.isDir())
             {
                 QDir child(fi.filePath());
-                qInfo() << "Inspecting Dir: " << child.absolutePath();
+                // qInfo() << "Inspecting Dir: " << child.absolutePath();
                 Snippets::getDirsRecursive(child, filter);
             }
             else {
-                qInfo() << "Folder: " << fi.path();
+                // qInfo() << "Folder: " << fi.path();
                 QDir dir(fi.absolutePath());
                 QFileInfoList list = dir.entryInfoList(filter);
                 foreach(QFileInfo file, list) {
-                    qInfo() << "File matched: " << file.fileName() << " " << file.absoluteFilePath();
+                    //qInfo() << "File matched: " << file.fileName() << " " << file.absoluteFilePath();
                     QString pathToFile = file.absoluteFilePath();
                     DirFileInfo df(pathToFile);
+                    df.addMapParseKeys(map_ParseKeys);
                     InputOutput* ioSingle = new InputOutput();
                     ioSingle->setpParser(pluginParser);
                     ioSingle->setwParser(pluginWriter);
                     ioSingle->setData(df.mapParseKeys,df.mapFileAttribs);
                     //QString outPutFile = Inifile.getOutputDir() + "/" + df.mapFileAttribs["FILE_Name"] + "." + fileOutType;
                     QString outPutFile = ioSingle->setOutputDir(inputdir, outputdir, file.absolutePath());
-                    qInfo() << "\n\ntarget: " << outPutFile;
+                    //qInfo() << "\n\ntarget: " << outPutFile;
                     ioSingle->makeOutputDir(outPutFile);
                     outPutFile.append("/" + df.mapFileAttribs["FILE_baseFileName"] + "." + fileOutType); // ".json"); // + pluginWriter);
-                    qInfo() << "target file: " << outPutFile;
+                    //qInfo() << "target file: " << outPutFile;
                     ioSingle->setFiles(pathToFile, outPutFile);
                     //ioSingle->runner();
 
+                    setCountedFiles();
                     DoFile* dofile = new DoFile();
                     dofile->inFile = pathToFile;
                     dofile->outFile = outPutFile;

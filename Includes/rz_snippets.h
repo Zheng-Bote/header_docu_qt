@@ -17,6 +17,19 @@ public:
     QStringList getPlugins(QString &path);
     bool testPlugins(QMap<QString, QString> &pluginMap, QStringList &plugins);
 
+    void setCountedFiles();
+    int getCountedFiles();
+
     void getDirsRecursive(QDir &root, QStringList filter);
-    void getDirsRecursive(QDir &root, QString &inputDir, QString &outputDir, QStringList filter, QString pluginParser, QString pluginWriter, QString fileOutType);
+    void getDirsRecursive(QDir &root,
+                          QString &inputDir,
+                          QString &outputDir,
+                          QStringList filter,
+                          QString pluginParser,
+                          QString pluginWriter,
+                          QString fileOutType,
+                          QStringList map_ParseKeys);
+
+private:
+    int countedFiles{};
 };

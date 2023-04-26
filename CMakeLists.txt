@@ -23,6 +23,7 @@ add_executable(
   Includes/rz_snippets.cpp
   Includes/rz_header_docu_plugins.h
   Includes/rz_datetime.h
+  Includes/rz_datetime.cpp
   Includes/rz_dirfileinfo.h
   Includes/rz_dirfileinfo.cpp
   Includes/rz_inoutput.h

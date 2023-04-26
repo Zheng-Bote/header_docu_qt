@@ -72,11 +72,11 @@ void InputOutput::runner()
         //return;
     }
 
-    qDebug() << "Loaded: " << pLoader.fileName();
+    //qDebug() << "Loaded: " << pLoader.fileName();
 
     Plugin* pPlugin = qobject_cast<Plugin*>(pLoader.instance());
     if(pPlugin) {
-        qInfo() << "Plugin loaded: " << pPlugin->getVersion();
+        // qInfo() << "Plugin loaded: " << pPlugin->getVersion();
         //qInfo() << "InputOutput::runner: infile: " << inFile;
 
         pPlugin->parseFile(mapParseKeys, inFile);
@@ -88,11 +88,11 @@ void InputOutput::runner()
         //return;
     }
 
-    qDebug() << "Loaded: " << wLoader.fileName();
+    //qDebug() << "Loaded: " << wLoader.fileName();
 
     Plugin* wPlugin = qobject_cast<Plugin*>(wLoader.instance());
     if(wPlugin) {
-        qInfo() << "Plugin loaded: " << wPlugin->getVersion();
+        //qInfo() << "Plugin loaded: " << wPlugin->getVersion();
         wPlugin->writeFile(mapParseKeys, mapFileAttribs, outFile);
     }
 }

@@ -247,6 +247,7 @@ current available plug-ins:
 
 *Parser Plug-Ins*
 - gh_markdown (https://github.com/Zheng-Bote/hd_ghmd_parser_plugin)
+- doxygen (https://github.com/Zheng-Bote/hd_doxygen_parser_plugin)
 
 *Writer Plug-Ins*
 - gh_markdown (https://github.com/Zheng-Bote/hd_ghmd_writer_plugin)
@@ -258,6 +259,7 @@ current available plug-ins:
 > | Version | Date       | Developer | Comments                           |
 > | ------- | ---------- | --------- | ---------------------------------- |
 > | 1.0.0   | 2023-04-07 | RZheng    | created                            |
+> | 1.1.0   | 2023-04-25 | RZheng    | cleaned output                     |
 
 <!-- ROADMAP -->
 
@@ -397,15 +399,15 @@ correct identifier:
 > Q_DECLARE_INTERFACE(Plugin, "net.hase-zheng.header_docu_plugin");
 
 ```
-Loading... "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhd_ghmd_parser_plugin.so"
-Loaded:  "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/parser/libhd_ghmd_parser_plugin.so"
+Loading... "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_ghmd_parser_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_ghmd_parser_plugin.so"
 Plugin Constructor
 Test from Plugin:  "Test: header_docu plugin"
 Plugin Name:  "gh_markdown"
 Plugin Version:  "Github Markdown parser-v0.3.0"
 Plugin Deconstructed
-Loading... "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/writer/libhd_json_writer_plugin.so"
-Loaded:  "/media/zb_bamboo/500GB/Dev/QT/build-header_docu_qt-Desktop_Qt_6_5_0_GCC_64bit-Debug/Plugins/writer/libhd_json_writer_plugin.so"
+Loading... "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/writer/libhd_json_writer_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/writer/libhd_json_writer_plugin.so"
 Plugin Constructor
 Test from Plugin:  "json" :  "Test: header_docu plugin"
 Plugin Name:  "json"
@@ -413,6 +415,32 @@ Plugin Version:  "json writer-v0.3.0"
 Plugin Deconstructed
 ```
 
+**STDOUT**
+
+```
+"2023-04-25 19:17:12"  :  "./header_docu_qt" - "01.01.00"  started
+Loading... "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_doxygen_parser_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_doxygen_parser_plugin.so"
+Test from  "doxygen"  Plugin:  "Test: header_docu plugin"
+Plugin Name:  "doxygen"
+Plugin Version:  "doxygen header parser-v1.0.0"
+Loading... "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_ghmd_parser_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/parser/libhd_ghmd_parser_plugin.so"
+Test from  "gh_markdown"  Plugin:  "Test: header_docu plugin"
+Plugin Name:  "gh_markdown"
+Plugin Version:  "Github Markdown parser-v1.0.0"
+Loading... "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/writer/libhd_ghmd_writer_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/writer/libhd_ghmd_writer_plugin.so"
+Test from  "gh_markdown"  Plugin:  "Test: header_docu plugin"
+Plugin Name:  "gh_markdown"
+Plugin Version:  "Github Markdown writer-v1.1.0"
+Loading... "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/writer/libhd_json_writer_plugin.so"
+Loaded:  "/media/zb_bamboo/500GB/Dev/QT/header_docu_qt/Plugins/writer/libhd_json_writer_plugin.so"
+Test from Plugin:  "json" :  "Test: header_docu plugin"
+Plugin Name:  "json"
+Plugin Version:  "json writer-v1.0.0"
+"2023-04-25 19:17:13"  :  840  File(s) parsed with  "doxygen"  header parser. Output stored with format  "json"  in folder:  "/media/zb_bamboo/500GB/Dev/C/ESP32/Arduino_ESP32_libs/Docu"
+```
 
 ### the end
 
