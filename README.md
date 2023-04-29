@@ -193,7 +193,7 @@ OpenSSL (Library tested: OpenSSL 3.0.2 15 Mar 2022; Linux: openssl-dev) is neede
 
 ### SYNTAX:
 
-** MacOS has no thread support so currently parsing directories is disabled. Please use single file parsing for MacOS. **
+**MacOS has no thread support so currently parsing directories is disabled. Please use single file parsing for MacOS.**
 
 ```
 file header parser
