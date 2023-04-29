@@ -142,7 +142,9 @@ see:
 
 ### Prerequisites
 
-the Linux AppImage should run on most newer x86_64 Linux system 
+- the Linux AppImage should run on most newer x86_64 Linux system 
+- the MacOS application package should be installable at least under MacOS Ventura
+
 
 (for compiling and linking):
 
@@ -184,7 +186,15 @@ OpenSSL (Library tested: OpenSSL 3.0.2 15 Mar 2022; Linux: openssl-dev) is neede
 
 #### Linux
 
-1. configure your QT project to C++17 and cmake
+1. rename CMakeList.txt_linux to CMakeList.txt
+2. configure your QT project to C++17 and cmake
+3. adjust your Inifile to Linux filesystem
+
+#### MacOs
+
+1. rename CMakeList.txt_macos to CMakeList.txt
+2. configure your QT project to C++17 and clang
+3. adjust your Inifile to MacOs filesystem
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -274,6 +284,8 @@ current available plug-ins:
 *Writer Plug-Ins*
 - gh_markdown (https://github.com/Zheng-Bote/hd_ghmd_writer_plugin)
 - json (https://github.com/Zheng-Bote/hd_json_writer_plugin)
+- json_spdx (https://github.com/Zheng-Bote/hd_spdx_writer_plugin) => useable, but still under construction
+
 
 
 ### HISTORY:
@@ -319,7 +331,9 @@ current available plug-ins:
 
 -   [x] runable Linux AppImage
 
--   [ ] create optional SBOM (spdx) json file[s] => writer plug-in
+-   [x] installable MacOS package
+
+-   [-] create optional SBOM (spdx) json file[s] => writer plug-in (under construction)
 
 -   [ ] upload optional SBOM (spdx) json to RDBMS => writer plug-in
 
