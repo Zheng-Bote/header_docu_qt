@@ -111,7 +111,9 @@ The future default writer plugin will be adoc (ASCIIdoc) so fileheader_docu can 
 
 ### built with
 
-GNU/Linux 5.15.0-69-generic x86_64 and QT 6.5 C++17.
+- GNU/Linux 5.15.0-69-generic x86_64 and QT 6.5 C++17 (g++).
+- macOS Ventura (13.3, arm64-apple-darwin22.4.0) and QT 6.5 C++17 (clang++)
+
 
 **There are other, older versions:**
 
@@ -134,8 +136,8 @@ see:
 
 **tested with:**
 
-- GNU/Linux with Kernel 5.15
-- g++ 11.3.0
+- GNU/Linux with Kernel 5.15 and g++ 11.3.0
+- MacOS Ventura (13.3, arm64-apple-darwin22.4.0) and clang++ 14.0.3
 
 
 ### Prerequisites
@@ -190,6 +192,8 @@ OpenSSL (Library tested: OpenSSL 3.0.2 15 Mar 2022; Linux: openssl-dev) is neede
 ## Usage
 
 ### SYNTAX:
+
+** MacOS has no thread support so currently parsing directories is disabled. Please use single file parsing for MacOS. **
 
 ```
 file header parser
@@ -279,6 +283,7 @@ current available plug-ins:
 > | 1.0.0   | 2023-04-07 | RZheng    | created                            |
 > | 1.1.0   | 2023-04-25 | RZheng    | cleaned output                     |
 > | 1.2.0   | 2023-04-26 | RZheng    | list available Plug-Ins            |
+> | 1.3.0   | 2023-04-29 | RZheng    | MacOS support (without threads)    |
 
 <!-- ROADMAP -->
 

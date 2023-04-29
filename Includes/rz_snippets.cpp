@@ -3,7 +3,7 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief lib for header_docu
  * @details ragpicker for unsorted methods
- * @version 0.6.0
+ * @version 0.7.0
  * @date 2023-04-15
  *
  * @copyright Copyright (c) ZHENG Robert 2023
@@ -14,8 +14,10 @@
 #include "rz_dirfileinfo.h"
 #include "rz_inoutput.h"
 
+#ifndef TARGET_OS_MAC
 #include <QThread>
 #include <QThreadPool>
+#endif
 #include "rz_dofile.h"
 #include <iostream>
 
@@ -156,10 +158,12 @@ void Snippets::getDirsRecursive(QDir &root,
                                 QString fileOutType,
                                 QStringList map_ParseKeys)
 {
+#ifndef TARGET_OS_MAC
+
         QThread::currentThread()->setObjectName("getDirsRecursive");
         //qInfo() << "Main: " << QThread::currentThread();
         QThreadPool pool;
-
+#endif
 
         QDir inputDir(inputdir);
         //qInfo() << "---Listing---";
@@ -202,13 +206,19 @@ void Snippets::getDirsRecursive(QDir &root,
                     dofile->pPluginPath = pluginParser;
                     dofile->wPluginPath = pluginWriter;
                     dofile->setAutoDelete(true);
+                    #ifndef TARGET_OS_MAC
                     pool.start(dofile);
                     //pool.waitForDone();
+                    #else
+                    dofile->run();
+                    #endif
 
                 }
             }
         }
+        #ifndef TARGET_OS_MAC
         pool.waitForDone();
+        #endif
 }
 
 

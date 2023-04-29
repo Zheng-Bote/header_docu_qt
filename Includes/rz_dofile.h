@@ -9,7 +9,9 @@
 #include <QFileInfo>
 
 #include <QRunnable>
+#ifndef TARGET_OS_MAC
 #include <QThread>
+#endif
 
 #include "rz_header_docu_plugins.h"
 

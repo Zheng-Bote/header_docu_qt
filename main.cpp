@@ -3,7 +3,7 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief header_docu
  * @details fileheader parser for documentation with parser plugins and output writer plugins
- * @version 1.2.0
+ * @version 1.3.0
  * @date 2023-04-25
  *
  * @copyright Copyright (c) ZHENG Robert 2023
@@ -212,6 +212,7 @@ int main(int argc, char *argv[])
         ioSingle->runner();
     }
 
+    #ifndef TARGET_OS_MAC
     // request parse dir
     if(result.count("dir")) {
 
@@ -245,7 +246,9 @@ int main(int argc, char *argv[])
                                   fileOutType,
                                   Inifile.getMetadata());
     }
-
+#else
+qWarning() << "no directory parsing support for MacOS.\nPlease use single file parsing.";
+#endif
     /*
     // ##### TEST #####
     qInfo() << "##### Test von Main #####";
