@@ -336,6 +336,8 @@ current available plug-ins:
 
 -   [x] installable MacOS package
 
+-   [x] installable Windows package
+
 -   [x] create optional SBOM (spdx) json file[s] => writer plug-in
 
 -   [ ] upload optional SBOM (spdx) json to RDBMS => writer plug-in
