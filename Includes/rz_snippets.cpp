@@ -44,9 +44,9 @@ QStringList Snippets::getPlugins(QString &path)
     QDir dir(path);
     QFileInfoList list = dir.entryInfoList(filter);
     foreach(QFileInfo file, list) {
-        #ifdef Q_OS_LINUX
+        #ifndef Q_OS_MACX
             plugins.append(file.filePath());
-        #elif defined(Q_OS_MACX)
+        #else
             if(!file.isSymLink()) {
                 plugins.append(file.filePath());
             }

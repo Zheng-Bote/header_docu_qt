@@ -113,7 +113,7 @@ The future default writer plugin will be adoc (ASCIIdoc) so fileheader_docu can 
 
 - GNU/Linux 5.15.0-69-generic x86_64 and QT 6.5 C++17 (g++).
 - macOS Ventura (13.3, arm64-apple-darwin22.4.0) and QT 6.5 C++17 (clang++)
-
+- Windows 10 and QT 6.5 C++17 (MinGW_64)
 
 **There are other, older versions:**
 
@@ -138,12 +138,13 @@ see:
 
 - GNU/Linux with Kernel 5.15 and g++ 11.3.0
 - MacOS Ventura (13.3, arm64-apple-darwin22.4.0) and clang++ 14.0.3
-
+- Win10pro and MinGW_64
 
 ### Prerequisites
 
 - the Linux AppImage should run on most newer x86_64 Linux system 
 - the MacOS application package should be installable at least under MacOS Ventura
+- the Windows Setup.exe should be installable at under Win10 and Win11
 
 
 (for compiling and linking):
