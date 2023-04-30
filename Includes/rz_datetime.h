@@ -27,6 +27,7 @@ public:
 
     void setDateTime();
     QString getHumanUTC();
+    QString getUTC();
 
 private:
     struct date_time

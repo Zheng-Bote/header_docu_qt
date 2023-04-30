@@ -203,8 +203,6 @@ OpenSSL (Library tested: OpenSSL 3.0.2 15 Mar 2022; Linux: openssl-dev) is neede
 
 ### SYNTAX:
 
-**MacOS has no thread support so currently parsing directories is disabled. Please use single file parsing for MacOS.**
-
 ```
 file header parser
 Usage:
@@ -252,6 +250,10 @@ Writer Plug-Ins:
 ================
 Plugin Name:........gh_markdown
 Version:............Github Markdown writer-v1.1.0
+Plugin Name:........json_cyclonedx
+Version:............json CycloneDX (spdx) writer-v0.1.0
+Plugin Name:........json_spdx
+Version:............json spdx writer-v1.0.0
 Plugin Name:........json
 Version:............json writer-v1.0.0
 ```
@@ -285,7 +287,7 @@ current available plug-ins:
 - gh_markdown (https://github.com/Zheng-Bote/hd_ghmd_writer_plugin)
 - json (https://github.com/Zheng-Bote/hd_json_writer_plugin)
 - json_spdx (https://github.com/Zheng-Bote/hd_spdx_writer_plugin) => useable, but still under construction
-
+- json_cyclonedx (https://github.com/Zheng-Bote/hd_json_CycloneDX_writer_plugin)
 
 
 ### HISTORY:
@@ -333,7 +335,7 @@ current available plug-ins:
 
 -   [x] installable MacOS package
 
--   [-] create optional SBOM (spdx) json file[s] => writer plug-in (under construction)
+-   [x] create optional SBOM (spdx) json file[s] => writer plug-in
 
 -   [ ] upload optional SBOM (spdx) json to RDBMS => writer plug-in
 

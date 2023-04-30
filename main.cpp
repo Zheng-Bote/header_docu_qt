@@ -4,12 +4,11 @@
  * @brief header_docu
  * @details fileheader parser for documentation with parser plugins and output writer plugins
  * @version 1.3.0
- * @date 2023-04-25
+ * @date 2023-04-30
  *
  * @copyright Copyright (c) ZHENG Robert 2023
  *
  */
-
 
 #include <QCoreApplication>
 
@@ -26,7 +25,7 @@
 #include "Includes/rz_inoutput.h"
 #include "Includes/rz_snippets.h"
 
-const std::string VERSION = "01.02.00";
+const std::string VERSION = "01.03.00";
 
 int main(int argc, char *argv[])
 {
@@ -208,12 +207,11 @@ int main(int argc, char *argv[])
         ioSingle->makeOutputDir(outPutFile);
         outPutFile.append("/" + df.mapFileAttribs["FILE_baseFileName"] + "." + fileOutType);
         //qInfo() << "target file: " << outPutFile;
-        Snippets.setCountedFiles();
+        Snippets.setCountedFiles(1);
         ioSingle->setFiles(Inifile.getInputDir(), outPutFile);
         ioSingle->runner();
     }
 
-    #ifndef TARGET_OS_MAC
     // request parse dir
     if(result.count("dir")) {
 
@@ -247,9 +245,7 @@ int main(int argc, char *argv[])
                                   fileOutType,
                                   Inifile.getMetadata());
     }
-#else
-qWarning() << "no directory parsing support for MacOS.\nPlease use single file parsing.";
-#endif
+
     /*
     // ##### TEST #####
     qInfo() << "##### Test von Main #####";
@@ -276,9 +272,9 @@ qWarning() << "no directory parsing support for MacOS.\nPlease use single file p
 
     datetime.setDateTime();
 
-    // 2023-04-03 18:22:57 : 5 .cpp Files in folder ./src found. Output stored with format md in folder ./header_docu_cpp
-    qInfo() << datetime.getHumanUTC() << " : " << Snippets.getCountedFiles()
-            << " File(s) parsed with " << fileInType << " header parser. Output stored with format "
+    // 2023-04-03 18:22:57 : Snippets.getCountedFiles() .cpp Files in folder ./src found. Output stored with format md in folder ./header_docu_cpp
+    qInfo() << datetime.getHumanUTC() << " : "
+            << "File(s) parsed with " << fileInType << " header parser. Output stored with format "
             << fileOutType << " in folder: " << Inifile.getOutputDir();
 
     // the end

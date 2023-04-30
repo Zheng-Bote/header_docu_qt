@@ -22,7 +22,9 @@
 #include <iostream>
 
 Snippets::Snippets()
-{}
+{
+    countedFiles = 0;
+}
 
 void Snippets::checkBool(const bool &boolCheck)
 {
@@ -117,9 +119,9 @@ void Snippets::listPlugins(QStringList plugins)
     }
 }
 
-void Snippets::setCountedFiles()
+void Snippets::setCountedFiles(int count)
 {
-    countedFiles++;
+    countedFiles = countedFiles + count;
 }
 
 int Snippets::getCountedFiles()
@@ -179,6 +181,8 @@ void Snippets::getDirsRecursive(QDir &root,
                 // qInfo() << "Folder: " << fi.path();
                 QDir dir(fi.absolutePath());
                 QFileInfoList list = dir.entryInfoList(filter);
+                setCountedFiles(list.length());
+
                 foreach(QFileInfo file, list) {
                     //qInfo() << "File matched: " << file.fileName() << " " << file.absoluteFilePath();
                     QString pathToFile = file.absoluteFilePath();
@@ -197,8 +201,7 @@ void Snippets::getDirsRecursive(QDir &root,
                     ioSingle->setFiles(pathToFile, outPutFile);
                     //ioSingle->runner();
 
-                    setCountedFiles();
-                    DoFile* dofile = new DoFile();
+                    DoFile *dofile = new DoFile();
                     dofile->inFile = pathToFile;
                     dofile->outFile = outPutFile;
                     dofile->mapFileAttribs = df.mapFileAttribs;

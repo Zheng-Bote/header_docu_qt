@@ -24,3 +24,8 @@ QString DateTime::getHumanUTC()
 {
     return dt.humanUTC;
 }
+
+QString DateTime::getUTC()
+{
+    return dt.timeUTC;
+}

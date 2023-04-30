@@ -89,7 +89,8 @@ void DirFileInfo::setDateTimeInfo(QFileInfo &fi)
     QDateTime UTCcurrent(QDateTime::currentDateTimeUtc());
     QDateTime local(UTCcurrent.toLocalTime());
 
-    mapFileAttribs["FILE_Scan_UTCcurrent"] = dt.UTCcurrent = UTCcurrent.toString("yyyy-MM-dd HH:mm:ss");
+    mapFileAttribs["FILE_Scan_UTCcurrent"] = UTCcurrent.toString(
+        "yyyy-MM-ddTHH:mm:ssZ"); // dt.UTCcurrent = UTCcurrent.toString("yyyy-MM-dd HH:mm:ss");
     mapFileAttribs["FILE_Scan_localTime"] = dt.localTime = local.toString("yyyy-MM-dd HH:mm:ss");
 
     QDateTime UTC(fi.lastModified().toUTC());
