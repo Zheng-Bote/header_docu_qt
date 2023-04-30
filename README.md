@@ -299,6 +299,7 @@ current available plug-ins:
 > | 1.1.0   | 2023-04-25 | RZheng    | cleaned output                     |
 > | 1.2.0   | 2023-04-26 | RZheng    | list available Plug-Ins            |
 > | 1.3.0   | 2023-04-29 | RZheng    | MacOS support (without threads)    |
+> | 1.3.0   | 2023-04-30 | RZheng    | Windows support                    |
 
 <!-- ROADMAP -->
 
